@@ -12,7 +12,7 @@
   <body>
   <% if user_signed_in? %>
     Welcome <%= current_user.name %>, <%= current_user.email %><br />
-    Signed in as <%= current_user.role %>
+    <%= current_user.email %> is signed in as <%= current_user.role %>
     <li>
       <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
     </li>

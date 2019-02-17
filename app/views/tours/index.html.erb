@@ -11,6 +11,7 @@
       <th>Start date</th>
       <th>End date</th>
       <th>Start location</th>
+      <th>Available seats</th>
       <th>Total seats</th>
       <th>Status</th>
       <th colspan="3"></th>
@@ -26,15 +27,20 @@
         <td><%= tour.start_date %></td>
         <td><%= tour.end_date %></td>
         <td><%= tour.start_location %></td>
+        <td><%= tour.available_seats %></td>
         <td><%= tour.total_seats %></td>
         <td><%= tour.show_status %></td>
         <td><%= link_to 'Show', tour %></td>
         <% if (current_user.agent? && current_user.id == tour.user_id) || current_user.admin? %>
+          <td><%= link_to 'Who Booked', booking_path(id: tour.id) %></td>
           <td><%= link_to 'Edit', edit_tour_path(tour) %></td>
-          <% if !tour.isCompleted? %>
-            <td><%= link_to 'Cancel', cancel_tour_tour_path(tour), method: :put, data: { confirm: 'Are you sure to cancel Tour?' } %></td>
+          <% if !tour.is_completed? && !tour.canceled %>
+            <td><%= link_to 'Cancel', cancel_tour_tour_path(tour), method: :put, data: { confirm: 'Are you sure Cancelling Tour?' } %></td>
           <% end %>
-          <td><%= link_to 'Delete', tour, method: :delete, data: { confirm: 'Are you sure to Delete Tour?' } %></td>
+          <td><%= link_to 'Delete', tour, method: :delete, data: { confirm: 'Are you sure Deleting Tour?' } %></td>
+        <% end %>
+        <% if (current_user.customer? || current_user.admin?) && !tour.is_completed? && !tour.canceled && !tour.is_booked?(current_user.id) %>
+          <td><%= link_to 'Book Tour', new_booking_path(tour_id: tour.id) %></td>
         <% end %>
       </tr>
     <% end %>
@@ -43,8 +49,11 @@
 
 <br>
 
+<%= link_to 'Home', home_index_url %> |
+
 <% if current_user.agent? || current_user.admin? %>
   <%= link_to 'Create New Tour', new_tour_path %> |
 <% end %>
-<br/>
-<td><%= link_to 'Back to User page', users_url %></td>
+
+<td><%= link_to 'Back to User page', users_url %></td> |
+<td><%= link_to 'Booked Tours', bookings_url %></td>

@@ -41,7 +41,7 @@
 <% if current_user.admin? || current_user.agent? %>
   <%= link_to 'Create/View/Edit/Cancel/Delete Tours', tours_url %>
 <% else %>
-  <%= link_to 'View all available tours', tours_url %>
+  <%= link_to 'View/Book Tours', tours_url %>
 <% end %>
 
 <br/>
@@ -58,3 +58,5 @@
 
 <br/>
 <br/>
+
+<%= link_to 'Home', home_index_url %>

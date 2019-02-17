@@ -1,4 +1,5 @@
 class BookingsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_booking, only: [:show, :edit, :update, :destroy]
 
   # GET /bookings
@@ -10,6 +11,7 @@ class BookingsController < ApplicationController
   # GET /bookings/1
   # GET /bookings/1.json
   def show
+    @tours = Tour.find(params[:id])
   end
 
   # GET /bookings/new
@@ -25,6 +27,8 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(booking_params)
+    @booking.user_id = current_user.id
+    @booking.tour_id = Tour.find(params[:tour_id]).id
 
     respond_to do |format|
       if @booking.save

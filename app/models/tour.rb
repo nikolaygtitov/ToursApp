@@ -1,5 +1,6 @@
 class Tour < ApplicationRecord
   belongs_to :user
+  has_many :bookings
 
   validates :name, :description, :deadline, :start_date, :end_date,
             :start_location, :country, :state, presence: true
@@ -23,7 +24,7 @@ class Tour < ApplicationRecord
     end
   end
 
-  def isCompleted?
+  def is_completed?
     self.end_date < Date.current
   end
 
@@ -34,8 +35,30 @@ class Tour < ApplicationRecord
 
   def show_status
     return "Canceled" if self.canceled
-    return "Completed" if isCompleted?
+    return "Completed" if is_completed?
     return "On Going" if self.start_date <= Date.current && self.end_date >= Date.current
     "In Future"
   end
+
+  def requested_seats
+    req_seats = 0
+    Booking.where("tour_id = ?", self.id).find_each do |booking|
+      req_seats += booking.booked_seats
+    end
+    req_seats
+  end
+
+  def available_seats
+    self.total_seats - requested_seats
+  end
+
+  def find_booking(current_user_id)
+    Booking.find_by(user_id: current_user_id, tour_id: self.id)
+  end
+
+  def is_booked?(current_user_id)
+    return false if find_booking(current_user_id).nil?
+    true
+  end
+
 end

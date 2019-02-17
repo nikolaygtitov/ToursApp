@@ -6,14 +6,31 @@
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @booking.user %>
+  <strong>Tour name:</strong>
+  <%= @booking.find_booked_tour.name %>
 </p>
 
 <p>
-  <strong>Tour:</strong>
-  <%= @booking.tour %>
+  <strong>Tour price:</strong>
+  <%= @booking.find_booked_tour.price %>
 </p>
 
-<%= link_to 'Edit', edit_booking_path(@booking) %> |
+<p>
+  <strong>Tour start date:</strong>
+  <%= @booking.find_booked_tour.start_date %>
+</p>
+
+<p>
+  <strong>Tour end date:</strong>
+  <%= @booking.find_booked_tour.end_date %>
+</p>
+
+<p>
+  <strong>Tour status:</strong>
+  <%= @booking.find_booked_tour.show_status %>
+</p>
+
+<%= link_to 'Edit Booking', edit_booking_path(@booking, tour_id: @booking.find_booked_tour.id) %> |
+<%= link_to 'View Booked Tour', @booking.find_booked_tour %> |
+<%= link_to 'All Tours', tours_path %> |
 <%= link_to 'Back', bookings_path %>

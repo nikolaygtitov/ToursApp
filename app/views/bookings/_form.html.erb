@@ -12,21 +12,19 @@
   <% end %>
 
   <div class="field">
+    <p>
+      <strong>Tour name:</strong>
+      <%= Tour.find(params[:tour_id]).name %>
+    </p>
+  </div>
+
+  <div class="field">
     <%= form.label :booked_seats %>
     <%= form.number_field :booked_seats %>
   </div>
 
-  <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :tour_id %>
-    <%= form.text_field :tour_id %>
-  </div>
-
   <div class="actions">
+    <%= hidden_field_tag 'tour_id', Tour.find(params[:tour_id]).id %>
     <%= form.submit %>
   </div>
 <% end %>

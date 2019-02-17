@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :bookings
   resources :tours
   resources :tours do
     member do

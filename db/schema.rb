@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_16_031148) do
+ActiveRecord::Schema.define(version: 2019_02_17_063506) do
+
+  create_table "tours", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.decimal "price", precision: 8, scale: 2
+    t.string "image_file_name"
+    t.string "image_content_type"
+    t.integer "image_file_size"
+    t.datetime "image_updated_at"
+    t.date "deadline"
+    t.date "start_date"
+    t.date "end_date"
+    t.string "start_location"
+    t.text "country"
+    t.text "state"
+    t.integer "total_seats"
+    t.boolean "canceled", default: false
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tours_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name"

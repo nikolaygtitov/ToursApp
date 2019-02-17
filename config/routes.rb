@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
   resources :tours
+  resources :tours do
+    member do
+      patch :cancel_tour
+      put :cancel_tour
+    end
+  end
   get 'home/index'
 
   devise_for :users

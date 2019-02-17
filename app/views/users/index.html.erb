@@ -39,9 +39,9 @@
 
 <h1>Tours section</h1>
 <% if current_user.admin? || current_user.agent? %>
-  <%= link_to 'View all available tours and list your tours', users_url %>
+  <%= link_to 'Create/View/Edit/Cancel/Delete Tours', tours_url %>
 <% else %>
-  <%= link_to 'View all available tours', users_url %>
+  <%= link_to 'View all available tours', tours_url %>
 <% end %>
 
 <br/>

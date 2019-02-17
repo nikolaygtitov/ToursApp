@@ -17,7 +17,7 @@
 
 <p>
   <strong>Image:</strong>
-  <%= @tour.image %>
+  <%= image_tag @tour.image.url(:large) %>
 </p>
 
 <p>
@@ -41,12 +41,12 @@
 </p>
 
 <p>
-  <strong>Country:</strong>
+  <strong>Countries itinerary:</strong>
   <%= @tour.country %>
 </p>
 
 <p>
-  <strong>State:</strong>
+  <strong>States itinerary:</strong>
   <%= @tour.state %>
 </p>
 
@@ -56,14 +56,19 @@
 </p>
 
 <p>
-  <strong>Canceled:</strong>
-  <%= @tour.canceled %>
+  <strong>Status:</strong>
+  <%= @tour.show_status %>
 </p>
 
 <p>
-  <strong>User:</strong>
-  <%= @tour.user %>
+  <strong>Contact information:</strong>
+  <%= @tour.show_agent_info %>
 </p>
 
-<%= link_to 'Edit', edit_tour_path(@tour) %> |
+<% if current_user.admin? || current_user.agent? %>
+  <%= link_to 'Edit', edit_tour_path(@tour) %> |
+  <% if !@tour.isCompleted? %>
+    <%= link_to 'Cancel', cancel_tour_tour_path(@tour), method: :put, data: { confirm: 'Are you sure to cancel Tour?' }   %> |
+  <% end %>
+<% end %>
 <%= link_to 'Back', tours_path %>

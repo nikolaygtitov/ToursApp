@@ -1,0 +1,32 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Customers Booked My Tour</h1>
+
+<table>
+  <thead>
+  <tr>
+    <th>Customer name</th>
+    <th>Customer email</th>
+    <th>Tour name</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @bookings.each do |booking| %>
+    <% if current_user.id == booking.find_agent_id_of_tour && Tour.find(params[:tour_id]).id  == booking.tour_id %>
+      <tr>
+        <td><%= booking.find_customer.name %></td>
+        <td><%= booking.find_customer.email %></td>
+        <td><%= booking.find_booked_tour.name %></td>
+        <td><%= link_to 'Show Customer', booking.find_customer %></td>
+      </tr>
+    <% end %>
+  <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'Home', home_index_url %> |
+<%= link_to 'Back to Tours', tours_url %>

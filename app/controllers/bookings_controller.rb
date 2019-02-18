@@ -71,6 +71,12 @@ class BookingsController < ApplicationController
     @bookings = Booking.all
   end
 
+  # GET /my_customers_booked
+  # GET /my_customers_booked.json
+  def my_customers_booked
+    @bookings = Booking.all
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_booking

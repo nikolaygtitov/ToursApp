@@ -40,7 +40,7 @@ class Tour < ApplicationRecord
     "In Future"
   end
 
-  def requested_seats
+  def tour_requested_seats
     req_seats = 0
     Booking.where("tour_id = ?", self.id).find_each do |booking|
       req_seats += booking.booked_seats
@@ -49,7 +49,7 @@ class Tour < ApplicationRecord
   end
 
   def available_seats
-    self.total_seats - requested_seats
+    self.total_seats - tour_requested_seats
   end
 
   def find_booking(current_user_id)

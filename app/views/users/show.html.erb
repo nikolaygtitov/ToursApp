@@ -6,9 +6,20 @@
 </p>
 
 <p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
   <strong>Role:</strong>
   <%= @user.role %>
 </p>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+
+<%= link_to 'Home', home_index_url %> |
+
+<% if current_user.admin? || current_user.id == @user.id %>
+  <%= link_to 'Edit', edit_user_path(@user) %> |
+<% end %>
+<%= link_to 'Back to My Customers', bookings_url(id: current_user.id) %> |
+<%= link_to 'Back to Usear Page', users_path %>

@@ -32,10 +32,10 @@
         <td><%= tour.show_status %></td>
         <td><%= link_to 'Show', tour %></td>
         <% if (current_user.agent? && current_user.id == tour.user_id) || current_user.admin? %>
-          <td><%= link_to 'Who Booked', booking_path(id: tour.id) %></td>
+          <td><%= link_to 'My Customers', bookings_url(id: current_user.id) %></td>
           <td><%= link_to 'Edit', edit_tour_path(tour) %></td>
           <% if !tour.is_completed? && !tour.canceled %>
-            <td><%= link_to 'Cancel', cancel_tour_tour_path(tour), method: :put, data: { confirm: 'Are you sure Cancelling Tour?' } %></td>
+            <td><%= link_to 'Cancel', cancel_tour_tour_url(tour), method: :put, data: { confirm: 'Are you sure Cancelling Tour?' } %></td>
           <% end %>
           <td><%= link_to 'Delete', tour, method: :delete, data: { confirm: 'Are you sure Deleting Tour?' } %></td>
         <% end %>

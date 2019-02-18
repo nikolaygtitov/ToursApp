@@ -70,15 +70,17 @@
   <%= @tour.show_agent_info %>
 </p>
 
+<%= link_to 'Home', home_index_url %> |
 
 <% if (current_user.admin? || current_user.customer?) && !@tour.is_completed? && !@tour.canceled && !@tour.is_booked?(current_user.id) %>
   <%= link_to 'Book Tour', new_booking_path(tour_id: @tour.id) %> |
 <% end %>
 <% if current_user.admin? || current_user.agent? %>
+  <td><%= link_to 'Back to My Customers', bookings_url(id: current_user.id) %></td> |
   <%= link_to 'Edit', edit_tour_path(@tour) %> |
-  <% if !@tour.is_completed? %>
+  <% if !@tour.is_completed? && !@tour.canceled %>
     <%= link_to 'Cancel', cancel_tour_tour_path(@tour), method: :put, data: { confirm: 'Are you sure Cancelling Tour?' }   %> |
   <% end %>
 <% end %>
 
-<%= link_to 'Back', tours_path %>
+<%= link_to 'Back to Tours', tours_path %>

@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :customers_bookings]
   # before_action :user_signed_in?, only: [:index, :edit, :update, :destroy]
   # before_action :admin_user, only: [:new, :create, :edit, :update, :destroy]
 
@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @users = Tour.find(params[:id])
   end
 
   # GET /users/new
@@ -62,6 +63,12 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  # GET /my_customers
+  # GET /my_customers.json
+  def my_customers
+    @users = User.all
   end
 
   private

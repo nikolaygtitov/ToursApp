@@ -1,18 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<h1>List of all Customers who Booked my Tours</h1>
+<h1>My Bookings</h1>
 
 <table>
   <thead>
     <tr>
-      <th>Customer name</th>
-      <th>Customer email</th>
       <th>Tour name</th>
       <th>Tour price</th>
       <th>Tour start location</th>
       <th>Tour start date</th>
       <th>Tour end date</th>
       <th>Tour status</th>
+      <th>Booked seats</th>
       <th>Available seats</th>
       <th>Total seats</th>
       <th colspan="3"></th>
@@ -21,25 +20,21 @@
 
   <tbody>
     <% @bookings.each do |booking| %>
-      <% if current_user.id == booking.find_agent_id_of_tour %>
+      <% if current_user.id == booking.user_id %>
         <tr>
-          <td><%= booking.find_customer.name %></td>
-          <td><%= booking.find_customer.email %></td>
           <td><%= booking.find_booked_tour.name %></td>
           <td><%= booking.find_booked_tour.price %></td>
           <td><%= booking.find_booked_tour.start_location %></td>
           <td><%= booking.find_booked_tour.start_date %></td>
           <td><%= booking.find_booked_tour.end_date %></td>
           <td><%= booking.find_booked_tour.show_status %></td>
+          <td><%= booking.booked_seats %></td>
           <td><%= booking.find_booked_tour.available_seats %></td>
           <td><%= booking.find_booked_tour.total_seats %></td>
           <td><%= link_to 'Show Tour', booking.find_booked_tour %></td>
-          <td><%= link_to 'Show Customer', booking.find_customer %></td>
-          <td><%= link_to 'Edit Tour', edit_tour_url(booking.find_booked_tour) %></td>
-          <% if !booking.find_booked_tour.is_completed? && !booking.find_booked_tour.canceled %>
-            <td><%= link_to 'Cancel', cancel_tour_tour_url(booking.find_booked_tour), method: :put, data: { confirm: 'Are you sure Cancelling Tour?' } %></td>
-          <% end %>
-          <td><%= link_to 'Delete Tour', booking.find_booked_tour, method: :delete, data: { confirm: 'Are you sure Deleting Tour?' } %></td>
+          <td><%= link_to 'Show Booking', booking %></td>
+          <td><%= link_to 'Edit Booking', edit_booking_url(booking, tour_id: booking.find_booked_tour.id) %></td>
+          <td><%= link_to 'Delete Booking', booking, method: :delete, data: { confirm: 'Are you sure to delete Booking?' } %></td>
         </tr>
       <% end %>
     <% end %>
@@ -49,4 +44,5 @@
 <br>
 
 <%= link_to 'Home', home_index_url %> |
+<%= link_to 'Create New Booking', tours_path %> |
 <%= link_to 'Back', home_index_url %>

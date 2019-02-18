@@ -11,7 +11,7 @@ class BookingsController < ApplicationController
   # GET /bookings/1
   # GET /bookings/1.json
   def show
-    @tours = Tour.find(params[:id])
+    # @tours = Tour.find(params[:id])
   end
 
   # GET /bookings/new
@@ -63,6 +63,12 @@ class BookingsController < ApplicationController
       format.html { redirect_to bookings_url, notice: 'Booking was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  # GET /my_bookings
+  # GET /my_bookings.json
+  def my_bookings
+    @bookings = Booking.all
   end
 
   private

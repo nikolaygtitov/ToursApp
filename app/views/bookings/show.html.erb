@@ -36,6 +36,11 @@
 </p>
 
 <p>
+  <strong>Wait list:</strong>
+  <%= @booking.find_booked_tour.get_waitlist %>
+</p>
+
+<p>
   <strong>Total seats:</strong>
   <%= @booking.find_booked_tour.total_seats %>
 </p>

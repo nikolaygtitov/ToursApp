@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_17_144258) do
+ActiveRecord::Schema.define(version: 2019_02_18_045610) do
 
   create_table "bookings", force: :cascade do |t|
     t.integer "booked_seats"
@@ -56,6 +56,16 @@ ActiveRecord::Schema.define(version: 2019_02_17_144258) do
     t.datetime "remember_created_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "waitlists", force: :cascade do |t|
+    t.integer "requested_seats"
+    t.integer "user_id"
+    t.integer "tour_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tour_id"], name: "index_waitlists_on_tour_id"
+    t.index ["user_id"], name: "index_waitlists_on_user_id"
   end
 
 end

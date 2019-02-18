@@ -13,6 +13,7 @@
       <th>Tour status</th>
       <th>Booked seats</th>
       <th>Available seats</th>
+      <th>Wait list</th>
       <th>Total seats</th>
       <th colspan="3"></th>
     </tr>
@@ -30,6 +31,7 @@
           <td><%= booking.find_booked_tour.show_status %></td>
           <td><%= booking.booked_seats %></td>
           <td><%= booking.find_booked_tour.available_seats %></td>
+          <td><%= booking.find_booked_tour.get_waitlist %></td>
           <td><%= booking.find_booked_tour.total_seats %></td>
           <td><%= link_to 'Show Tour', booking.find_booked_tour %></td>
           <td><%= link_to 'Show Booking', booking %></td>

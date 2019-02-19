@@ -27,11 +27,14 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(booking_params)
+    tour = Tour.find(params[:tour_id])
     @booking.user_id = current_user.id
-    @booking.tour_id = Tour.find(params[:tour_id]).id
+    @booking.tour_id = tour.id
 
     respond_to do |format|
-      if @booking.save
+      if tour.available_seats < @booking.booked_seats
+        format.html { redirect_to new_waitlist_url(tour_id: tour.id, book_seats: @booking.booked_seats), alert: 'Not enough available seats to Book.' }
+      elsif @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
         format.json { render :show, status: :created, location: @booking }
       else

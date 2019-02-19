@@ -15,13 +15,13 @@ class Tour < ApplicationRecord
 
   def end_date_after_start_date?
     if end_date < start_date
-      errors.add "Start date cannot be later End date"
+      errors.add :start_date, "Start date cannot be later End date"
     end
   end
 
   def start_date_after_deadline?
     if start_date < deadline
-      errors.add "Booking deadline date cannot be later Start date"
+      errors.add :deadline, "Booking deadline date cannot be later Start date"
     end
   end
 

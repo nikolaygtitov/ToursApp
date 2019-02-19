@@ -1,19 +1,20 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Requested seats:</strong>
-  <%= @waitlist.requested_seats %>
-</p>
-
-<p>
   <strong>User:</strong>
-  <%= @waitlist.user %>
+  <%= User.find(@waitlist.user_id).name %>
 </p>
 
 <p>
   <strong>Tour:</strong>
-  <%= @waitlist.tour %>
+  <%= Tour.find(@waitlist.tour_id).name %>
 </p>
+
+<p>
+  <strong>Requested seats in Wait List:</strong>
+  <%= @waitlist.requested_seats %>
+</p>
+
 
 <%= link_to 'Edit', edit_waitlist_path(@waitlist) %> |
 <%= link_to 'Back', waitlists_path %>

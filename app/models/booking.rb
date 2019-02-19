@@ -1,12 +1,10 @@
 class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :tour
-
   validates :booked_seats, numericality: { only_integer: true }, presence: true
-
   validate :availability?
-
   after_destroy :fill_available_seats
+
 
   def find_booked_tour
     Tour.find(self.tour_id)
@@ -20,11 +18,12 @@ class Booking < ApplicationRecord
     User.find(self.user_id)
   end
 
+  private
   def availability?
     this_tour = find_booked_tour
-    errors.add "Cannot Book #{this_tour.show_status} tour" unless this_tour.show_status == "In Future"
-    if this_tour.available_seats < self.booked_seats
-      errors.add "Cannot Book tour due to seats availability"
+    errors.add :this_tour.name, "Cannot Book #{this_tour.show_status} tour" unless this_tour.show_status == "In Future"
+    if this_tour.total_seats < self.booked_seats
+      errors.add :this_tour.name, "Cannot Book #{self.booked_seats} with only #{this_tour.total_seats} total seats in the tour."
     end
   end
 
@@ -40,7 +39,8 @@ class Booking < ApplicationRecord
               new_book = Booking.new(user_id: entry.user_id, tour_id: entry.tour_id, booked_seats: entry.requested_seats)
               new_book.save
             else
-              booking.update_attributes(booked_seats: entry.requested_seats)
+              taken_seats = booking.booked_seats
+              booking.update_attributes(booked_seats: taken_seats + entry.requested_seats)
             end
             filled_in = true
             entry.destroy
@@ -55,7 +55,8 @@ class Booking < ApplicationRecord
               new_book = Booking.new(user_id: entry.user_id, tour_id: entry.tour_id, booked_seats: this_tour.available_seats)
               new_book.save
             else
-              booking.update_attributes(booked_seats: difference)
+              taken_seats = booking.booked_seats
+              booking.update_attributes(booked_seats: taken_seats + this_tour.available_seats)
             end
             entry.update_attributes(requested_seats: difference)
             break

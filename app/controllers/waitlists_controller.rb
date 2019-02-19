@@ -16,6 +16,7 @@ class WaitlistsController < ApplicationController
   # GET /waitlists/new
   def new
     @waitlist = Waitlist.new
+    @book_seats = params[:book_seats]
   end
 
   # GET /waitlists/1/edit
@@ -26,9 +27,18 @@ class WaitlistsController < ApplicationController
   # POST /waitlists.json
   def create
     @waitlist = Waitlist.new(waitlist_params)
+    @waitlist.user_id = current_user.id
+    @waitlist.tour_id = Tour.find(params[:tour_id]).id
+    validation = @waitlist.validate_booking_seats(params[:book_seats].to_i)
 
     respond_to do |format|
-      if @waitlist.save
+      if !validation.nil?
+        flash[:danger] = "Error: #{validation}"
+        @waitlist.destroy
+        format.html { redirect_to new_waitlist_url(tour_id: params[:tour_id], book_seats: @book_seats), alert: validation }
+        # format.html { redirect_to new_waitlist_url(tour_id: params[:tour_id], book_seats: params[:book_seats]), alert: validation }
+        format.json { render json: @waitlist.errors, status: :unprocessable_entity }
+      elsif @waitlist.save
         format.html { redirect_to @waitlist, notice: 'Waitlist was successfully created.' }
         format.json { render :show, status: :created, location: @waitlist }
       else

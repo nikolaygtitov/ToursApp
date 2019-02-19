@@ -1,5 +1,7 @@
-<h1>New Waitlist</h1>
+<h1>New Booking for Tour "<%= Tour.find(params[:tour_id]).name %>"</h1>
+<h3>It seems there are not enough seats to book the Tour</h3>
+<h2>Do you still want to book with available seats and get into Wait List?</h2>
 
 <%= render 'form', waitlist: @waitlist %>
-
-<%= link_to 'Back', waitlists_path %>
+<%= link_to 'Cancel', tours_url %> |
+<%= link_to 'Back', my_bookings_url %>

@@ -24,7 +24,7 @@
   </div>
 
   <div class="actions">
-    <%= hidden_field_tag 'tour_id', Tour.find(params[:tour_id]).id %>
-    <%= form.submit %>
+    <%= hidden_field_tag 'tour_id', params[:tour_id] %>
+    <%= form.submit data: { confirm: 'Confirm to Book' } %>
   </div>
 <% end %>

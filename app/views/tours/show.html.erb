@@ -83,6 +83,30 @@
   <br> <br>
 <% end %>
 
+
+<% if @reviews.blank? %>
+  <% if current_user.customer? %>
+    <h3>No reviews just yet, would you like to add the first!</h3>
+    <%= link_to"Write Review", new_tour_review_path(@tour), class: "btn btn-danger"%>
+  <% else %>
+    <h3>No reviews just yet</h3>
+  <% end %>
+<% else %>
+  <% @reviews.each do |review| %>
+    <div class="reviews">
+      <p><%= review.rating %></p>
+      <p><%= review.subject %></p>
+      <p><%= review.content %></p>
+    </div>
+  <% end %>
+<% end %>
+
+<% if (current_user.customer?) %>
+  <%= link_to "Write a Review", new_tour_review_path(@tour) %>
+<% end %>
+
+
+
 <%= link_to 'Home', home_index_url %> |
 <% if (current_user.admin? || current_user.customer?) && !@tour.is_completed? && !@tour.canceled && !@tour.is_booked?(current_user.id) %>
   <%= link_to 'Book Tour', new_booking_path(tour_id: @tour.id) %> |

@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'new_with_waitlist' => 'bookings#new_with_waitlist'
   resources :tours
   resources :tours do
+    resources :reviews, except: [:show, :index]
     member do
       patch :cancel_tour
       put :cancel_tour

@@ -2,6 +2,7 @@ class Tour < ApplicationRecord
   belongs_to :user
   has_many :bookings
   has_many :waitlists
+  has_many :reviews
 
   validates :name, :description, :deadline, :start_date, :end_date,
             :start_location, :country, :state, presence: true
@@ -31,7 +32,7 @@ class Tour < ApplicationRecord
 
   def show_agent_info
     user = User.find(self.user_id)
-    "Name: #{user.name} Email: #{user.email}"
+    "Name: #{user.name} Email: #{user.email} "
   end
 
   def show_status

@@ -1,11 +1,11 @@
 Rails.application.routes.draw do
-  resources :reviews
   resources :waitlists
   resources :bookings
   get 'my_bookings' => 'bookings#my_bookings'
   get 'my_customers_booked' => 'bookings#my_customers_booked'
   resources :tours
   resources :tours do
+    resources :reviews, except: [:show, :index]
     member do
       patch :cancel_tour
       put :cancel_tour

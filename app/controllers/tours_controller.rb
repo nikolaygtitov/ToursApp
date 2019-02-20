@@ -12,6 +12,7 @@ class ToursController < ApplicationController
   # GET /tours/1.json
   def show
     @tours = Tour.find(params[:id])
+    @reviews = Review.where(tour_id: @tour.id).order("created_at DESC")
   end
 
   # GET /tours/new

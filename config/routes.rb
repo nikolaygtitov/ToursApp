@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :reviews
   resources :waitlists
   resources :bookings
   get 'my_bookings' => 'bookings#my_bookings'

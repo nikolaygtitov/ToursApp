@@ -1,81 +1,82 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-4">
+          <%= image_tag @tour.image.url(:medium) %>
+          <div class="table-responsive">
+            <table class="table">
+              <tbody>
+                <tr>
+                  <td><strong>Name:</strong></td>
+                  <td><%= @tour.name %></td>
+                </tr>
+                <tr>
+                  <td><strong>Description:</strong></td>
+                  <td><%= @tour.description %></td>
+                </tr>
+                <tr>
+                  <td><strong>Price:</strong></td>
+                  <td><%= @tour.price %></td>
+                </tr>
+                <tr>
+                  <td><strong>Deadline:</strong></td>
+                  <td><%= @tour.deadline %></td>
+                </tr>
+                <tr>
+                  <td><strong>Deadline:</strong></td>
+                  <td><%= @tour.deadline %></td>
+                </tr>
+                <tr>
+                   <td><strong>Start date:</strong></td>
+                    <td><%= @tour.start_date %></td>
+                </tr>
+                <tr>
+                  <td><strong>End date:</strong></td>
+                  <td><%= @tour.end_date %></td>
+                </tr>
+                <tr>
+                  <td><strong>Start location:</strong></td>
+                  <td><%= @tour.start_location %></td>
+                </tr>
+                <tr>
+                  <td><strong>Countries itinerary:</strong></td>
+                  <td><%= @tour.country %></td>
+                </tr>
+                <tr>
+                  <td><strong>States itinerary:</strong></td>
+                  <td><%= @tour.state %></td>
+                </tr>
+                <tr>
+                  <td><strong>Available seats:</strong></td>
+                  <td><%= @tour.available_seats %></td>
+                </tr>
+                <tr>
+                  <td><strong>Wait list:</strong></td>
+                  <td><%= @tour.get_waitlist %></td>
+                </tr>
+                <tr>
+                  <td><strong>Total seats:</strong></td>
+                  <td><%= @tour.total_seats %></td>
+                </tr>
+                <tr>
+                  <td><strong>Status:</strong></td>
+                  <td><%= @tour.show_status %></td>
+                </tr>
+                <tr>
+                  <td><strong>Contact information:</strong></td>
+                  <td><%= @tour.show_agent_info %></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @tour.name %>
-</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @tour.description %>
-</p>
-
-<p>
-  <strong>Price:</strong>
-  <%= @tour.price %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= image_tag @tour.image.url(:large) %>
-</p>
-
-<p>
-  <strong>Deadline:</strong>
-  <%= @tour.deadline %>
-</p>
-
-<p>
-  <strong>Start date:</strong>
-  <%= @tour.start_date %>
-</p>
-
-<p>
-  <strong>End date:</strong>
-  <%= @tour.end_date %>
-</p>
-
-<p>
-  <strong>Start location:</strong>
-  <%= @tour.start_location %>
-</p>
-
-<p>
-  <strong>Countries itinerary:</strong>
-  <%= @tour.country %>
-</p>
-
-<p>
-  <strong>States itinerary:</strong>
-  <%= @tour.state %>
-</p>
-
-<p>
-  <strong>Available seats:</strong>
-  <%= @tour.available_seats %>
-</p>
-
-<p>
-  <strong>Wait list:</strong>
-  <%= @tour.get_waitlist %>
-</p>
-
-<p>
-  <strong>Total seats:</strong>
-  <%= @tour.total_seats %>
-</p>
-
-<p>
-  <strong>Status:</strong>
-  <%= @tour.show_status %>
-</p>
-
-<p>
-  <strong>Contact information:</strong>
-  <%= @tour.show_agent_info %>
-</p>
-
-<%= link_to 'Home', home_index_url %> |
 
 <% if (current_user.admin? || current_user.customer?) && !@tour.is_completed? && !@tour.canceled && !@tour.is_booked?(current_user.id) %>
   <%= link_to 'Book Tour', new_booking_path(tour_id: @tour.id) %> |

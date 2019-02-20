@@ -1,0 +1,47 @@
+<nav class="navbar navbar-default" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+		</div>
+
+		<% if user_signed_in? %>
+		<p class="text-center">
+			<p class="text-info">Welcome <%= current_user.name %>, <%= current_user.email %>, <%= current_user.name %> is signed in as <%= current_user.role %>  
+				</p>
+			</p>
+		<% end %>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav">
+				<li><%= link_to 'Tours Reviews', root_path, class: "navbar-brand" %></li>
+				<li> <%= link_to 'Home', home_index_url, class: "navbar-brand" %></li>		
+				<% if user_signed_in? %>						  
+                	<li> <%= link_to 'Logout', destroy_user_session_path, method: :delete, class:"active" %></li>
+                	<td><%= link_to 'Edit/Delete Profile', edit_user_registration_url %></td> |
+                	<% if current_user.agent? || current_user.admin? %>
+  						<%= link_to 'Create New Tour', new_tour_path %> |
+  						<%= link_to 'List All My Customers', bookings_url(id: current_user.id) %> 
+					<% end %>
+
+					<% if current_user.customer? || current_user.admin? %>
+  						<td><%= link_to 'My Booked Tours', my_bookings_url %></td> 
+					<% end %>
+  				<% else %>
+    				<li><%= link_to 'Login', new_user_session_path, class:"active"  %> </li>
+  				<% end %>
+			</ul>
+
+			<form class="navbar-form navbar-right" role="search">
+				<div class="form-group">
+					<input type="text" class="form-control" placeholder="Search" name="123">
+				</div>
+				<button type="submit" class="btn btn-default">Submit</button>
+			</form>
+		</div>
+	</div>
+</nav>

@@ -10,18 +10,7 @@
   </head>
 
   <body>
-  <% if user_signed_in? %>
-    Welcome <%= current_user.name %>, <%= current_user.email %><br />
-    <%= current_user.name %> is signed in as <%= current_user.role %>
-    <li>
-      <%= link_to('Logout', destroy_user_session_path, method: :delete) %>
-    </li>
-  <% else %>
-    <li>
-      <%= link_to('Login', new_user_session_path)  %>
-    </li>
-  <% end %>
-
+    <%= render 'layouts/header' %>
   <section>
     <div id="flash">
       <% flash.each do |key, value| %>

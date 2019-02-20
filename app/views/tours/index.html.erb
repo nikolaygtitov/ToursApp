@@ -1,6 +1,8 @@
 <p id="notice"><%= notice %></p>
+<dir class="jumbotron">
+  <h1>Tours List</h1>
+</dir>
 
-<h1>Tours</h1>
 
 <table>
   <thead>
@@ -51,16 +53,7 @@
 
 <br>
 
-<%= link_to 'Home', home_index_url %> |
 
-<% if current_user.agent? || current_user.admin? %>
-  <%= link_to 'Create New Tour', new_tour_path %> |
-  <%= link_to 'List All My Customers', bookings_url(id: current_user.id) %> |
-<% end %>
-
-<% if current_user.customer? || current_user.admin? %>
-  <td><%= link_to 'My Booked Tours', my_bookings_url %></td> |
-<% end %>
 
 <td><%= link_to 'Back to User page', users_url %></td>
 

@@ -27,12 +27,17 @@
   </div>
 
   <div class="field">
-    <%= form.label :booked_seats %>
-    <%= form.number_field :booked_seats %>
+    <%= form.label 'Book Seats for the Tour (Note: if you leave it blank or 0, you will book NO seats)' %>
+    <%= form.number_field :booked_seats, value: params[:default_booked_seats] || form.object.booked_seats %>
+  </div>
+
+  <div class="field">
+    <%= form.label 'Place seats in the Wait List' %>
+    <%= form.number_field :waitlist_seats, value: params[:default_waitlist_seats] || form.object.waitlist_seats %>
   </div>
 
   <div class="actions">
     <%= hidden_field_tag 'tour_id', params[:tour_id] %>
-    <%= form.submit data: { confirm: 'Confirm to Book' } %>
+    <%= form.submit 'Book/Wait List', data: { confirm: 'Confirm Booking/Wait List' } %>
   </div>
 <% end %>

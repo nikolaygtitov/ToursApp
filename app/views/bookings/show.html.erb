@@ -36,13 +36,18 @@
 </p>
 
 <p>
-  <strong>Wait list:</strong>
-  <%= @booking.find_booked_tour.get_waitlist %>
+  <strong>Your wait listed seats:</strong>
+  <%= @booking.waitlist_seats %>
 </p>
 
 <p>
-  <strong>Total seats:</strong>
+  <strong>Tour total seats:</strong>
   <%= @booking.find_booked_tour.total_seats %>
+</p>
+
+<p>
+  <strong>Tour wait list seats:</strong>
+  <%= @booking.find_booked_tour.get_waitlist %>
 </p>
 
 <p>
@@ -50,7 +55,13 @@
   <%= @booking.find_booked_tour.show_status %>
 </p>
 
+<br>
+<%= button_to "Delete", @booking, method: :delete, data: { confirm: 'Are you sure Deleting Booking?' } %>
+<br> <br>
+
+<%= link_to 'Home', home_index_url %> |
 <%= link_to 'Edit Booking', edit_booking_path(@booking, tour_id: @booking.find_booked_tour.id) %> |
 <%= link_to 'View Booked Tour', @booking.find_booked_tour %> |
 <%= link_to 'All Tours', tours_path %> |
+<%= link_to 'Delete Booking', @booking, method: :delete, data: { confirm: 'Are you sure Deleting Booking?' } %> |
 <%= link_to 'Back', my_bookings_url %>

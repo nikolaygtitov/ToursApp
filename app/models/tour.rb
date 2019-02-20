@@ -1,11 +1,10 @@
 class Tour < ApplicationRecord
   belongs_to :user
   has_many :bookings
-  has_many :waitlists
 
   validates :name, :description, :deadline, :start_date, :end_date,
             :start_location, :country, :state, presence: true
-  validates :total_seats, numericality: { only_integer: true }, presence: true
+  validates :total_seats, numericality: { only_integer: true, greater_than: 0 }, presence: true
   validates :price, numericality: true, presence: true
   validate :start_date_after_deadline?
   validate :end_date_after_start_date?
@@ -43,8 +42,8 @@ class Tour < ApplicationRecord
 
   def tour_requested_seats
     req_seats = 0
-    Booking.where("tour_id = ?", self.id).find_each do |book|
-      req_seats += book.booked_seats
+    Booking.where("tour_id = ?", self.id).find_each do |tour|
+      req_seats += tour.booked_seats
     end
     req_seats
   end
@@ -64,8 +63,8 @@ class Tour < ApplicationRecord
 
   def get_waitlist
     total_wait_seats = 0
-    Waitlist.where("tour_id = ?", self.id).find_each do |waitseats|
-      total_wait_seats += waitseats.requested_seats
+    Booking.where("tour_id = ?", self.id).find_each do |wait_seats|
+      total_wait_seats += wait_seats.waitlist_seats
     end
     total_wait_seats
   end

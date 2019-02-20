@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_booking, only: [:show, :edit, :update, :destroy]
+  before_action :set_booking, only: [:get, :show, :edit, :update, :destroy]
 
   # GET /bookings
   # GET /bookings.json
@@ -11,11 +11,15 @@ class BookingsController < ApplicationController
   # GET /bookings/1
   # GET /bookings/1.json
   def show
-    # @tours = Tour.find(params[:id])
+    @bookings = Booking.find(params[:id])
   end
 
   # GET /bookings/new
   def new
+    @booking = Booking.new
+  end
+
+  def new_with_waitlist
     @booking = Booking.new
   end
 
@@ -30,10 +34,12 @@ class BookingsController < ApplicationController
     tour = Tour.find(params[:tour_id])
     @booking.user_id = current_user.id
     @booking.tour_id = tour.id
+    @booking.booked_seats = 0 if @booking.booked_seats.nil?
+    @booking.waitlist_seats = 0 if @booking.waitlist_seats.nil?
 
     respond_to do |format|
       if tour.available_seats < @booking.booked_seats
-        format.html { redirect_to new_waitlist_url(tour_id: tour.id, book_seats: @booking.booked_seats), alert: 'Not enough available seats to Book.' }
+        format.html { redirect_to new_with_waitlist_path(tour_id: tour.id, default_booked_seats: tour.available_seats, default_waitlist_seats: @booking.waitlist_seats + @booking.booked_seats - tour.available_seats), alert: 'Not enough available seats to Book.' }
       elsif @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
         format.json { render :show, status: :created, location: @booking }
@@ -47,6 +53,9 @@ class BookingsController < ApplicationController
   # PATCH/PUT /bookings/1
   # PATCH/PUT /bookings/1.json
   def update
+    @booking.booked_seats = 0 if @booking.booked_seats.nil?
+    @booking.waitlist_seats = 0 if @booking.waitlist_seats.nil?
+
     respond_to do |format|
       if @booking.update(booking_params)
         format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
@@ -88,6 +97,6 @@ class BookingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def booking_params
-      params.require(:booking).permit(:booked_seats, :user_id, :tour_id)
+      params.require(:booking).permit(:booked_seats, :waitlist_seats, :user_id, :tour_id)
     end
 end

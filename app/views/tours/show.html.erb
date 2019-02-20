@@ -74,9 +74,16 @@
   <strong>Contact information:</strong>
   <%= @tour.show_agent_info %>
 </p>
+<% if (current_user.admin? || current_user.agent?) && !@tour.is_completed? && !@tour.canceled %>
+  <%= button_to "Cancel", cancel_tour_tour_path(@tour), method: :put, data: { confirm: 'Are you sure Cancelling Tour?' } %>
+  <br> <br>
+<% end %>
+<% if (current_user.admin? || current_user.customer?) && !@tour.is_completed? && !@tour.canceled && !@tour.is_booked?(current_user.id) %>
+  <%= button_to "Book", new_booking_url, method: :get, params: {tour_id: @tour.id}%>
+  <br> <br>
+<% end %>
 
 <%= link_to 'Home', home_index_url %> |
-
 <% if (current_user.admin? || current_user.customer?) && !@tour.is_completed? && !@tour.canceled && !@tour.is_booked?(current_user.id) %>
   <%= link_to 'Book Tour', new_booking_path(tour_id: @tour.id) %> |
 <% end %>

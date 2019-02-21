@@ -5,13 +5,13 @@ one:
   description: MyText
   price: 9.99
   image: 
-  deadline: 2019-02-17
-  start_date: 2019-02-17
+  deadline: 2019-02-14
+  start_date: 2019-02-15
   end_date: 2019-02-17
   start_location: MyString
   country: MyText
   state: MyText
-  total_seats: 1
+  total_seats: 20
   canceled: false
   user: one
 
@@ -20,12 +20,12 @@ two:
   description: MyText
   price: 9.99
   image: 
-  deadline: 2019-02-17
-  start_date: 2019-02-17
-  end_date: 2019-02-17
+  deadline: 2019-02-12
+  start_date: 2019-02-13
+  end_date: 2019-02-16
   start_location: MyString
   country: MyText
   state: MyText
-  total_seats: 1
+  total_seats: 40
   canceled: false
   user: two

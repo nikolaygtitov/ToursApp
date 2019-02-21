@@ -2,8 +2,10 @@
 
 one:
   name: MyString
+  email: 'bob@test.com'
   role: 1
 
 two:
   name: MyString
-  role: 1
+  email: 'tim@test.com'
+  role: 2

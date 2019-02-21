@@ -332,4 +332,122 @@ class TourTest < ActiveSupport::TestCase
       assert_not tour.id
     end
   end
+
+  test "check is complete" do
+    tour = Tour.new do |t|
+      t.name = 'Miami Tour'
+      t.description = 'A tour to Miami'
+      t.deadline = Date.strptime('2/14/2019', "%m/%d/%Y")
+      t.start_date = Date.strptime('03/01/2019', "%m/%d/%Y")
+      t.end_date = Date.strptime('03/05/2050', "%m/%d/%Y")
+      t.start_location = 'Raleigh'
+      t.country = 'USA'
+      t.state = 'FL'
+      t.total_seats = 20
+      t.price = 500
+      t.user_id = users(:one).id
+    end
+    tour.save!
+    assert_not tour.is_completed?
+  end
+
+  test "show agent informaiton" do
+    tour = Tour.new do |t|
+      t.name = 'Miami Tour'
+      t.description = 'A tour to Miami'
+      t.deadline = Date.strptime('2/14/2019', "%m/%d/%Y")
+      t.start_date = Date.strptime('03/01/2019', "%m/%d/%Y")
+      t.end_date = Date.strptime('03/05/2019', "%m/%d/%Y")
+      t.start_location = 'Raleigh'
+      t.country = 'USA'
+      t.state = 'FL'
+      t.total_seats = 20
+      t.price = 500
+      t.user_id = users(:one).id
+    end
+    tour.save!
+    assert_equal("Name: MyString Email: bob@test.com", tour.show_agent_info)
+  end
+
+  test "check status canceled" do
+    tour = Tour.new do |t|
+      t.name = 'Miami Tour'
+      t.description = 'A tour to Miami'
+      t.deadline = Date.strptime('2/14/2019', "%m/%d/%Y")
+      t.start_date = Date.strptime('03/01/2019', "%m/%d/%Y")
+      t.end_date = Date.strptime('03/05/2019', "%m/%d/%Y")
+      t.start_location = 'Raleigh'
+      t.country = 'USA'
+      t.state = 'FL'
+      t.total_seats = 20
+      t.price = 500
+      t.user_id = users(:one).id
+      t.canceled = true
+    end
+    tour.save!
+    assert_equal("Canceled", tour.show_status)
+  end
+
+  test "check status completed" do
+    tour = Tour.new do |t|
+      t.name = 'Miami Tour'
+      t.description = 'A tour to Miami'
+      t.deadline = Date.strptime('2/14/2019', "%m/%d/%Y")
+      t.start_date = Date.strptime('02/17/2019', "%m/%d/%Y")
+      t.end_date = Date.strptime('02/19/2019', "%m/%d/%Y")
+      t.start_location = 'Raleigh'
+      t.country = 'USA'
+      t.state = 'FL'
+      t.total_seats = 20
+      t.price = 500
+      t.user_id = users(:one).id
+    end
+    tour.save!
+    assert_equal("Completed", tour.show_status)
+  end
+
+  test "check status On Going" do
+    tour = Tour.new do |t|
+      t.name = 'Miami Tour'
+      t.description = 'A tour to Miami'
+      t.deadline = Date.strptime('2/14/2019', "%m/%d/%Y")
+      t.start_date = Date.strptime('02/17/2019', "%m/%d/%Y")
+      t.end_date = Date.strptime('02/19/2050', "%m/%d/%Y")
+      t.start_location = 'Raleigh'
+      t.country = 'USA'
+      t.state = 'FL'
+      t.total_seats = 20
+      t.price = 500
+      t.user_id = users(:one).id
+    end
+    tour.save!
+    assert_equal("On Going", tour.show_status)
+  end
+
+  test "check status In Future" do
+    tour = Tour.new do |t|
+      t.name = 'Miami Tour'
+      t.description = 'A tour to Miami'
+      t.deadline = Date.strptime('2/14/2019', "%m/%d/%Y")
+      t.start_date = Date.strptime('02/17/2050', "%m/%d/%Y")
+      t.end_date = Date.strptime('02/19/2050', "%m/%d/%Y")
+      t.start_location = 'Raleigh'
+      t.country = 'USA'
+      t.state = 'FL'
+      t.total_seats = 20
+      t.price = 500
+      t.user_id = users(:one).id
+    end
+    tour.save!
+    assert_equal("In Future", tour.show_status)
+  end
+
+  test "check requested seats" do
+    assert_equal(3, tours(:one).tour_requested_seats)
+  end
+
+  test "check available seats" do
+    assert_equal(17, tours(:one).available_seats)
+  end
+
 end

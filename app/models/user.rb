@@ -14,5 +14,4 @@ class User < ApplicationRecord
   validates :email, format: { with: /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/,
                               message: "Email format is invalid" },
             uniqueness: { case_sensitive: false }, presence: true
-  validates :tour_id, presence: true
 end

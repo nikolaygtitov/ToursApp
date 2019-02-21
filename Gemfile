@@ -39,6 +39,7 @@ gem 'devise'
 gem "paperclip", "~> 6.0.0"
 gem 'bootstrap-sass'
 gem 'jquery-rails'
+gem 'searchkick', '~> 3.1', '>= 3.1.2'
 
 
 group :development, :test do

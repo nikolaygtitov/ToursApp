@@ -4,7 +4,6 @@ one:
   name: MyString
   description: MyText
   price: 9.99
-  image: 
   deadline: 2019-02-14
   start_date: 2019-02-15
   end_date: 2019-02-17
@@ -19,7 +18,6 @@ two:
   name: MyString
   description: MyText
   price: 9.99
-  image: 
   deadline: 2019-02-12
   start_date: 2019-02-13
   end_date: 2019-02-16

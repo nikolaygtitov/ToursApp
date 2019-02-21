@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :reviews
+  get 'show_tour_review' => 'reviews#show_tour_review'
   resources :bookings
   get 'my_bookings' => 'bookings#my_bookings'
   get 'my_customers_booked' => 'bookings#my_customers_booked'

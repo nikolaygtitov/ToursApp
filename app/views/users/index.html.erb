@@ -1,12 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Let's Get Started! What do you want to do?</h1>
+<h1>Let's Get Started!<br>What do you want to do?</h1>
 
 <%= link_to 'Edit/Delete Profile', edit_user_registration_url %>
 
-<br/>
-
 <% if current_user.admin? %>
+  <br>
   <h1>Users section (only for Admin purposes)</h1>
   <table>
     <tr>
@@ -35,28 +34,30 @@
   <td><%= link_to 'Create New User', new_user_url %></td>
 <% end %>
 
-<br><br><br>
+<br><br>
 
 <h1>Tours section</h1>
 <% if current_user.admin? || current_user.agent? %>
   <%= link_to 'Create/View/Edit/Cancel/Delete Tours', tours_url %>
-<% else %>
+  <br>
+<% end %>
+<% if current_user.admin? || current_user.customer? %>
   <%= link_to 'View/Book Tours', tours_url %>
+  <br>
 <% end %>
 
-<br/>
-<br/>
+<br>
 
-<h1>Reviews section</h1>
-<% if current_user.admin? %>
-  <%= link_to 'View all fields of Reviews from customers', users_url %>
-<% elsif current_user.agent? %>
-  <%= link_to 'View Reviews for a tour', users_url %>
-<% elsif current_user.customer? %>
-  <%= link_to 'Create/Edit/Delete Review', users_url %>
+<% if current_user.admin? || current_user.customer? %>
+  <h1>My Bookings section</h1>
+  <%= link_to 'My Bookings', my_bookings_url %>
 <% end %>
 
-<br/>
-<br/>
+<% if current_user.admin? || current_user.agent? %>
+  <h1>Reviews section</h1>
+  <%= link_to 'View my Reviews of My Tours', reviews_url %>
+<% end %>
+
+<br><br>
 
 <%= link_to 'Home', home_index_url %>

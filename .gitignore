@@ -16,7 +16,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
-/public/systems/tours/images
+/public/systems/
 
 # Ignore uploaded files in development
 /storage/*
@@ -36,3 +36,6 @@
 
 # Ignore Ruby version file specific to my environment
 .ruby-version
+
+# Ignore all the hidden files
+.rake_tasks~

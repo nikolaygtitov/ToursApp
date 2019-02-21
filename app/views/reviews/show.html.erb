@@ -16,14 +16,15 @@
 </p>
 
 <p>
-	<strong>User</strong>
-	<%= @review.user.name %>
+	<strong>Customer name:</strong>
+	<%= @review.get_customer_name %>
 </p>
 
 <p>
-	<strong>Email</strong>
-	<%= @review.user.email %>
+	<strong>Customer Email</strong>
+	<%= @review.get_customer_email %>
 </p>
-
-<%= link_to 'Edit', edit_review_path(@review) %> |
+<% if current_user.admin? || current_user.customer? %>
+  <%= link_to 'Edit', edit_review_path(@review) %> |
+<% end %>
 <%= link_to 'Back', reviews_path %>

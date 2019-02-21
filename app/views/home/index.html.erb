@@ -14,4 +14,13 @@
   <% else %>
     <%= link_to 'Bookings Page', bookings_url %>
   <% end %>
+  <br>
+  <% if user_signed_in? %>
+    <% if current_user.admin? || current_user.agent? %>
+      <%= link_to 'Reviews of my Tours', reviews_url %>
+    <% end %>
+  <% else %>
+    <%= link_to 'Reviews Page', reviews_url %>
+  <% end %>
+
 </div>

@@ -12,12 +12,6 @@ class ToursController < ApplicationController
   # GET /tours/1.json
   def show
     @tours = Tour.find(params[:id])
-    @reviews = Review.where(tour_id: @tour.id).order("created_at DESC")
-    if @review.blank?
-      @avg_review = 0
-    else
-      @avg_review = @reviews.average(:rating).round(2)
-    end
   end
 
   # GET /tours/new

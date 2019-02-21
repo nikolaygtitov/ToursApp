@@ -83,59 +83,55 @@
   <br> <br>
 <% end %>
 
+<br>
 
-<% if @reviews.blank? %>
-  <% if current_user.customer? %>
-    <h3>No reviews just yet, would you like to add the first!</h3>
-    <%= link_to"Write Review", new_tour_review_path(@tour), class: "btn btn-danger"%>
-  <% else %>
-    <h3>No reviews just yet</h3>
+<% if @tour.show_status == "Completed" %>
+  <h2>Reviews:</h2>
+  <% if (current_user.admin? || current_user.customer?) && @tour.is_taken?(current_user.id) %>
+    <% if @tour.get_customer_review(current_user.id).nil? %>
+      <%= button_to "Write Review", new_tour_review_url(@tour.id), method: :get %>
+    <% else %>
+      <%= button_to "Edit Review", edit_tour_review_path(@tour, @tour.get_customer_review(current_user.id)), method: :get %>
+    <% end %>
+  <% end %>
+  <% if (current_user.admin? || current_user.customer?) && !@tour.is_taken?(current_user.id) %>
+    <%= button_to "View Reviews", show_tour_review_url, method: :get, params: {id: @tour.get_review_id, tour_id: @tour.id} %>
+  <% end %>
+  <% if (current_user.admin? || current_user.agent?) && current_user.id == @tour.user_id %>
+    <%= button_to "View Reviews", show_tour_review_url, method: :get, params: {id: @tour.get_review_id, tour_id: @tour.id} %>
   <% end %>
 <% else %>
-  <% @reviews.each do |review| %>
-    <div class="reviews">
-      <% if current_user.admin? %>
-        <%= link_to 'Delete', tour_review_path(@tour, review), :method => :DELETE %>
-        <p class="text-info"> Review ID: <%= review.id %></p>
-        <p class="text-info"> User_ID: <%= review.user_id%></p>
-      <% end %>
-      <h3><%= review.subject %></h3>
-      <p>Rating: <%= review.rating %>/10</p>
-      <p><%= review.content %></p>
-      <% if current_user.id == review.user_id %>
-        <%= link_to 'Edit', edit_tour_review_path(@tour, review) %> |
-        <%= link_to 'Delete', tour_review_path(@tour, review), :method => :DELETE %>
-      <% end %>
-    </div>
-  <% end %>
+  <h2>Reviews: unavailable since Tour is Not Completed</h2>
 <% end %>
 
-<% if (current_user.customer?) %>
-  <%= link_to "Write a Review", new_tour_review_path(@tour) %>
-<% end %>
-
-
+<br><br>
 
 <%= link_to 'Home', home_index_url %> |
 <% if (current_user.admin? || current_user.customer?) && !@tour.is_completed? && !@tour.canceled && !@tour.is_booked?(current_user.id) %>
   <%= link_to 'Book Tour', new_booking_path(tour_id: @tour.id) %> |
 <% end %>
+<% if @tour.show_status == "Completed" %>
+  <% if (current_user.admin? || current_user.customer?) && @tour.is_taken?(current_user.id) %>
+    <% if @tour.get_customer_review(current_user.id).nil? %>
+      <%= link_to "Write Review", new_tour_review_path(tour_id: @tour.id) %> |
+    <% else %>
+      <%= link_to 'Edit Review', edit_tour_review_path(@tour, @tour.get_customer_review(current_user.id)) %> |
+    <% end %>
+  <% end %>
+  <% if (current_user.admin? || current_user.customer?) && !@tour.is_taken?(current_user.id) %>
+    <%= link_to "View Reviews", show_tour_review_url(id: @tour.get_review_id, tour_id: @tour.id) %> |
+  <% end %>
+  <% if (current_user.admin? || current_user.agent?) && current_user.id == @tour.user_id %>
+    <%= link_to "View Reviews", show_tour_review_url(id: @tour.get_review_id, tour_id: @tour.id) %> |
+  <% end %>
+<% end %>
 <% if current_user.admin? || current_user.agent? %>
-  <td><%= link_to 'Back to My Customers', bookings_url(id: current_user.id) %></td> |
+  <%= link_to 'Back to My Customers', bookings_url(id: current_user.id) %> |
   <%= link_to 'Edit', edit_tour_path(@tour) %> |
   <% if !@tour.is_completed? && !@tour.canceled %>
-    <%= link_to 'Cancel', cancel_tour_tour_path(@tour), method: :put, data: { confirm: 'Are you sure Cancelling Tour?' }   %> |
+    <%= link_to 'Cancel', cancel_tour_tour_path(@tour), method: :put, data: { confirm: 'Are you sure Cancelling Tour?' } %> |
   <% end %>
 <% end %>
 
-<%= link_to 'Back to Tours', tours_path %>
 
-<script>
-    $('.star-rating').raty({
-      path: '/assets/',
-      readOnly: true,
-      score: function() {
-            return $(this).attr('data-score');
-    }
-  });
-</script>
+<%= link_to 'Back to Tours', tours_path %>

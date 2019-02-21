@@ -1,9 +1,19 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_review, only: [:show, :edit, :update, :destroy]
   before_action :set_tour
-  before_action :authenticate_user!
+
   # GET /reviews
   # GET /reviews.json
+  def index
+    @reviews = Review.all
+  end
+
+  # GET /reviews/1
+  # GET /reviews/1.json
+  def show
+    @reviews = Review.find(params[:id])
+  end
 
   # GET /reviews/new
   def new
@@ -56,6 +66,17 @@ class ReviewsController < ApplicationController
     end
   end
 
+  # GET /show_tour_review/1
+  # GET /show_tour_review/1.json
+  def show_tour_review
+    if params[:id].nil? || params[:id].blank?
+      @reviews = nil
+    else
+      @reviews = Review.find(params[:id])
+    end
+
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_review
@@ -63,7 +84,11 @@ class ReviewsController < ApplicationController
     end
 
     def set_tour
-      @tour = Tour.find(params[:tour_id])
+      if params[:tour_id].nil? || params[:tour_id].blank?
+        @tour = nil
+      else
+        @tour = Tour.find(params[:tour_id])
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

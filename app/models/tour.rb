@@ -7,6 +7,7 @@ class Tour < ApplicationRecord
             :start_location, :country, :state, presence: true
   validates :total_seats, numericality: { only_integer: true, greater_than: 0 }, presence: true
   validates :price, numericality: true, presence: true
+  validates :user_id, presence: true
   validate :start_date_after_deadline?
   validate :end_date_after_start_date?
 
@@ -68,6 +69,22 @@ class Tour < ApplicationRecord
       total_wait_seats += wait_seats.waitlist_seats
     end
     total_wait_seats
+  end
+
+  def is_taken?(current_user_id)
+    booking = find_booking(current_user_id)
+    return false if booking.nil? || booking.booked_seats == 0
+    true
+  end
+
+  def get_customer_review(current_user_id)
+    Review.find_by(user_id: current_user_id, tour_id: self.id)
+  end
+
+  def get_review_id
+    review = Review.find_by(tour_id: self.id)
+    return nil if review.nil?
+    review.id
   end
 
 end

@@ -1,10 +1,18 @@
 class Review < ApplicationRecord
-	belongs_to :user
-	belongs_to :tour
-	validates :user_id, :presence => true
-    validates :tour_id, :presence => true
-    validates :rating, :inclusion => 1..10, presence: true
-    validates :subject, length: { maximum: 20 } , presence: true
-    validates :content, length: { maximum: 1000 } , presence: true
+  belongs_to :user
+  belongs_to :tour
+  validates :user_id, presence: true
+  validates :tour_id, presence: true
+  validates :rating, inclusion: 1..10, presence: true
+  validates :subject, length: { maximum: 20 }, presence: true
+  validates :content, length: { maximum: 1000 }, presence: true
+
+  def get_customer_name
+    Users.find(self.user_id).name
+  end
+
+  def get_customer_name
+    Users.find(self.user_id).email
+  end
 
 end

@@ -5,6 +5,8 @@ class Booking < ApplicationRecord
   validates :booked_seats, presence: true, numericality: { greater_than: 0 }, if: :both_missing?
   validates :waitlist_seats, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :waitlist_seats, presence: true, numericality: { greater_than: 0 }, if: :both_missing?
+  validates :user_id, presence: true
+  validates :tour_id, presence: true
   validate :seats_availability
   after_destroy :fill_available_seats
 

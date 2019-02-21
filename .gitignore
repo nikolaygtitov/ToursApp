@@ -16,6 +16,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+/public/systems/tours/images
 
 # Ignore uploaded files in development
 /storage/*

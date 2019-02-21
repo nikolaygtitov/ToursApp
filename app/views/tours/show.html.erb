@@ -87,7 +87,7 @@
 <% if @reviews.blank? %>
   <% if current_user.customer? %>
     <h3>No reviews just yet, would you like to add the first!</h3>
-    <%= link_to"Write Review", new_tour_review_path(@tour), class: "btn btn-danger" %>
+    <%= link_to"Write Review", new_tour_review_path(@tour), class: "btn btn-danger"%>
   <% else %>
     <h3>No reviews just yet</h3>
   <% end %>
@@ -99,8 +99,8 @@
         <p class="text-info"> Review ID: <%= review.id %></p>
         <p class="text-info"> User_ID: <%= review.user_id%></p>
       <% end %>
-      <p><%= review.rating %></p>
       <h3><%= review.subject %></h3>
+      <p>Rating: <%= review.rating %>/10</p>
       <p><%= review.content %></p>
       <% if current_user.id == review.user_id %>
         <%= link_to 'Edit', edit_tour_review_path(@tour, review) %> |
@@ -129,3 +129,13 @@
 <% end %>
 
 <%= link_to 'Back to Tours', tours_path %>
+
+<script>
+    $('.star-rating').raty({
+      path: '/assets/',
+      readOnly: true,
+      score: function() {
+            return $(this).attr('data-score');
+    }
+  });
+</script>

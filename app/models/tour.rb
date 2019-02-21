@@ -1,6 +1,7 @@
 class Tour < ApplicationRecord
   belongs_to :user
   has_many :bookings
+  has_many :reviews, dependent: :destroy
 
   validates :name, :description, :deadline, :start_date, :end_date,
             :start_location, :country, :state, presence: true

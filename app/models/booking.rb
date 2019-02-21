@@ -27,7 +27,7 @@ class Booking < ApplicationRecord
     def both_missing?
       self.booked_seats = 0 if self.booked_seats.nil?
       self.waitlist_seats = 0 if self.waitlist_seats.nil?
-      if self.booked_seats.zero? && self.waitlist_seats.zero?
+      if self.booked_seats.zero? && self.waitlist_seats.zero? && !self.bookmark
         errors.add 'Error:', "Cannot Book unspecified number of seats for the Tour"
       end
     end
@@ -35,7 +35,7 @@ class Booking < ApplicationRecord
   private
     def seats_availability
       tour = find_booked_tour
-      errors.add tour.name, "Cannot Book #{tour.show_status} tour" unless tour.show_status == "In Future"
+      errors.add tour.name, "Cannot Book #{tour.show_status} tour" unless tour.show_status == "In Future" || self.bookmark
       if tour.total_seats < self.booked_seats
         errors.add tour.name, "Cannot Book #{self.booked_seats} with only #{tour.total_seats} total seats in the tour."
       end

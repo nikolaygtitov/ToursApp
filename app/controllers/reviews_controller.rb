@@ -69,12 +69,8 @@ class ReviewsController < ApplicationController
   # GET /show_tour_review/1
   # GET /show_tour_review/1.json
   def show_tour_review
-    if params[:id].nil? || params[:id].blank?
-      @reviews = nil
-    else
-      @reviews = Review.find(params[:id])
-    end
-
+    @reviews = Review.where(tour_id: params[:tour_id])
+    @tour = Tour.find_by(id: params[:tour_id])
   end
 
   private

@@ -86,6 +86,48 @@ class BookingsController < ApplicationController
   # GET /my_customers_booked
   # GET /my_customers_booked.json
   def my_customers_booked
+    @bookings = Booking.where(tour_id: params[:tour_id])
+    @tour = Tour.find_by(id: params[:tour_id])
+  end
+
+  # GET /my_customers_bookmarked
+  # GET /my_customers_bookmarked.json
+  def my_customers_bookmarked
+    @bookings = Booking.where(tour_id: params[:tour_id])
+    @tour = Tour.find_by(id: params[:tour_id])
+  end
+
+  # GET /bookmark
+  # GET /bookmark.json
+  def bookmark
+    params[:tour_id].each do |tour_id|
+      booking = Booking.find_by(user_id: current_user.id, tour_id: tour_id)
+      if booking.nil? || booking.blank?
+        Booking.create!(booked_seats: 0, user_id: current_user.id, tour_id: tour_id, waitlist_seats: 0, bookmark: true)
+      else
+        booking.update_attributes(bookmark: true)
+      end
+    end
+    respond_to do |format|
+      if params[:tour_id].length == 1
+        format.html { redirect_to Tour.find(params[:tour_id]), notice: 'Tour was successfully Bookmarked.' }
+        format.json { render :show, status: :ok, location: Tour.find(params[:tour_id]) }
+      else
+        format.html { redirect_to tours_url, notice: 'Tours were successfully Bookmarked.' }
+        format.json { render :get, status: :ok, location: tours_url }
+      end
+    end
+  end
+
+  # GET /customer_bookmarks
+  # GET /customer_bookmarks.json
+  def customer_bookmarks
+    @bookings = Booking.all
+  end
+
+  # GET /agent_bookmarks
+  # GET /agent_bookmarks.json
+  def agent_bookmarks
     @bookings = Booking.all
   end
 

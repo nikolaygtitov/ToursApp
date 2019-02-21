@@ -1,8 +1,6 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  # before_action :user_signed_in?, only: [:index, :edit, :update, :destroy]
-  # before_action :admin_user, only: [:new, :create, :edit, :update, :destroy]
 
   # GET /users
   # GET /users.json

@@ -87,4 +87,9 @@ class Tour < ApplicationRecord
     review.id
   end
 
+  def is_bookmarked?(current_user_id)
+    booking = find_booking(current_user_id)
+    booking.bookmark
+  end
+
 end

@@ -7,20 +7,28 @@
   <br>
   <% if user_signed_in? %>
     <% if current_user.admin? || current_user.agent? %>
-      <%= link_to 'My Customers Page', bookings_url %>
+      <%= link_to 'My Customers booked my Tours', bookings_url %>
+      <br>
+      <%= link_to 'Bookmarks of all my Tours', agent_bookmarks_url %>
+      <br>
+      <%= link_to 'Reviews of my Tours', reviews_url %>
+      <br>
     <% elsif current_user.admin? || current_user.customer? %>
       <%= link_to 'My Bookings Page', my_bookings_url %>
+      <br>
+      <%= link_to 'My Bookmarks Page', customer_bookmarks_url %>
+      <br>
+      <%= link_to 'Reviews Page', reviews_url %>
+      <br>
     <% end %>
   <% else %>
+    <%= link_to 'Customers Page', bookings_url %>
+    <br>
     <%= link_to 'Bookings Page', bookings_url %>
-  <% end %>
-  <br>
-  <% if user_signed_in? %>
-    <% if current_user.admin? || current_user.agent? %>
-      <%= link_to 'Reviews of my Tours', reviews_url %>
-    <% end %>
-  <% else %>
+    <br>
     <%= link_to 'Reviews Page', reviews_url %>
+    <br>
+    <%= link_to 'Bookmarks Page', agent_bookmarks_url %>
+    <br>
   <% end %>
-
 </div>

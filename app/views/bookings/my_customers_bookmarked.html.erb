@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Customers Booked My Tour <%= @tour.name %></h1>
+<h1>Customers Bookmarked My Tour <%= @tour.name %></h1>
 
 <table>
   <thead>
@@ -14,7 +14,7 @@
 
   <tbody>
   <% @bookings.each do |booking| %>
-    <% if current_user.id == booking.find_agent_id_of_tour && @tour.id == booking.tour_id %>
+    <% if current_user.id == booking.find_agent_id_of_tour && @tour.id  == booking.tour_id && booking.bookmark %>
       <tr>
         <td><%= booking.find_customer.name %></td>
         <td><%= booking.find_customer.email %></td>

@@ -79,7 +79,7 @@
   <br> <br>
 <% end %>
 <% if (current_user.admin? || current_user.customer?) && !@tour.is_completed? && !@tour.canceled && !@tour.is_booked?(current_user.id) %>
-  <%= button_to "Book", new_booking_url, method: :get, params: {tour_id: @tour.id}%>
+  <%= button_to "Book", new_booking_url, method: :get, params: {tour_id: @tour.id} %>
   <br> <br>
 <% end %>
 
@@ -87,16 +87,25 @@
 <% if @reviews.blank? %>
   <% if current_user.customer? %>
     <h3>No reviews just yet, would you like to add the first!</h3>
-    <%= link_to"Write Review", new_tour_review_path(@tour), class: "btn btn-danger"%>
+    <%= link_to"Write Review", new_tour_review_path(@tour), class: "btn btn-danger" %>
   <% else %>
     <h3>No reviews just yet</h3>
   <% end %>
 <% else %>
   <% @reviews.each do |review| %>
     <div class="reviews">
+      <% if current_user.admin? %>
+        <%= link_to 'Delete', tour_review_path(@tour, review), :method => :DELETE %>
+        <p class="text-info"> Review ID: <%= review.id %></p>
+        <p class="text-info"> User_ID: <%= review.user_id%></p>
+      <% end %>
       <p><%= review.rating %></p>
-      <p><%= review.subject %></p>
+      <h3><%= review.subject %></h3>
       <p><%= review.content %></p>
+      <% if current_user.id == review.user_id %>
+        <%= link_to 'Edit', edit_tour_review_path(@tour, review) %> |
+        <%= link_to 'Delete', tour_review_path(@tour, review), :method => :DELETE %>
+      <% end %>
     </div>
   <% end %>
 <% end %>

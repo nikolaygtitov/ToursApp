@@ -59,7 +59,8 @@ class Tour < ApplicationRecord
   end
 
   def is_booked?(current_user_id)
-    return false if find_booking(current_user_id).nil?
+    booking = find_booking(current_user_id)
+    return false if booking.nil? || booking.booked_seats == 0
     true
   end
 

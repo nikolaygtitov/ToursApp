@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       put :cancel_tour
     end
   end
+  get 'search' => 'tours#search'
   get 'home/index'
 
   devise_for :users

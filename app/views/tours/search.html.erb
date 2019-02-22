@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+  <h1>Tours</h1>
+    <%= form_tag(tours_path, method: :get) do %>
+      <h4>Search by name:</h4>
+      <%= text_field_tag 'search[tour_name]', @search.tour_name %>
+      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
+    <% end %>
+    <%= form_tag(tours_path, method: :get) do %>
+      <h4>Search by start date  (year-month-day, like2019-02-22):</h4>
+      <%= text_field_tag 'search[date_from]', @search.date_from %>
+      <%= text_field_tag 'search[date_to]', @search.date_to %>
+      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
+    <% end %>
+    <%= form_tag(tours_path, method: :get) do %>
+      <h4>Search by price:(low price, high price)</h4>
+      <%= text_field_tag 'search[price_from]', @search.price_from %>
+      <%= text_field_tag 'search[price_to]', @search.price_to %>
+      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
+    <% end %>
+    <%= form_tag(tours_path, method: :get) do %>
+      <h4>Search by locations visited :</h4>
+      <%= text_field_tag 'search[location]', @search.location %>
+      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
+    <% end %>
+
+<%= link_to 'Home', home_index_url %> |
+<% if current_user.agent? || current_user.admin? %>
+  <%= link_to 'Create New Tour', new_tour_path %> |
+  <%= link_to 'List All My Customers', bookings_url(id: current_user.id) %> |
+  <%= link_to 'List Customers with Bookmarks', agent_bookmarks_url %> |
+<% end %>
+
+<% if current_user.customer? || current_user.admin? %>
+  <td><%= link_to 'My Booked Tours', my_bookings_url %></td> |
+  <td><%= link_to 'My Bookmarks', customer_bookmarks_url %></td> |
+<% end %>
+
+<td><%= link_to 'Back to User page', users_url %></td>
+

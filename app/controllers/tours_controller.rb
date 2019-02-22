@@ -5,9 +5,7 @@ class ToursController < ApplicationController
   # GET /tours
   # GET /tours.json
   def index
-    #@tours = Tour.all
-    @search = TourSearch.new(params[:search])
-    @tours = @search.scope
+    @tours = Tour.all
   end
 
   # GET /tours/1
@@ -76,6 +74,13 @@ class ToursController < ApplicationController
         format.json { render json: @tour.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # GET /search
+  # GET /search.json
+  def search
+    @search = TourSearch.new(params[:search])
+    @tours = @search.scope
   end
 
   private

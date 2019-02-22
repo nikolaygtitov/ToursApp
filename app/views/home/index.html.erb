@@ -9,7 +9,7 @@
     <% if current_user.admin? || current_user.agent? %>
       <%= link_to 'My Customers booked my Tours', bookings_url %>
       <br>
-      <%= link_to 'Bookmarks of all my Tours', agent_bookmarks_url %>
+      <%= link_to 'Customers with Bookmarks of my Tours', agent_bookmarks_url %>
       <br>
       <%= link_to 'Reviews of my Tours', reviews_url %>
       <br>
@@ -21,6 +21,8 @@
       <%= link_to 'Reviews Page', reviews_url %>
       <br>
     <% end %>
+    <%= link_to 'Search Tour Page', search_url %>
+    <br>
   <% else %>
     <%= link_to 'Customers Page', bookings_url %>
     <br>
@@ -29,6 +31,8 @@
     <%= link_to 'Reviews Page', reviews_url %>
     <br>
     <%= link_to 'Bookmarks Page', agent_bookmarks_url %>
+    <br>
+    <%= link_to 'Search Tour Page', search_url %>
     <br>
   <% end %>
 </div>

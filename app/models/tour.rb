@@ -14,9 +14,6 @@ class Tour < ApplicationRecord
   has_attached_file :image, styles: { large:"600x600>", medium:"300x300>", thumb:"150x150#"}
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 
-
-
-
   def end_date_after_start_date?
     if end_date < start_date
       errors.add :start_date, "Start date cannot be later End date"
@@ -107,6 +104,5 @@ class Tour < ApplicationRecord
       Tour.all
     end
   end
-
 
 end

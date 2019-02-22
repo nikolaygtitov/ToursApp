@@ -5,12 +5,9 @@ class ToursController < ApplicationController
   # GET /tours
   # GET /tours.json
   def index
-#    @tours = Tour.all
-      @tours= if params[:search]
-      Tour.where('name LIKE ?', "%#{params[:search]}%")
-    else
-      Tour.all
-    end
+      #@tours = Tour.all
+      @search = TourSearch.new(params[:search])
+      @tours = @search.scope
   end
 
   # GET /tours/1

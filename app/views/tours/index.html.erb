@@ -6,7 +6,7 @@
   <table>
     <thead>
       <tr>
-        <% if (current_user.customer? || current_user.admin?) %>
+        <% if current_user.customer? || current_user.admin? %>
           <th>Bookmark</th>
         <% end %>
         <th>Name</th>
@@ -41,7 +41,7 @@
           <td><%= tour.total_seats %></td>
           <td><%= tour.show_status %></td>
           <td><%= link_to 'Show', tour %></td>
-          <% if (current_user.agent? && current_user.id == tour.user_id) || current_user.admin? %>
+          <% if current_user.admin? || (current_user.agent? && current_user.id == tour.user_id) %>
             <td><%= link_to 'My Customers booked', my_customers_booked_url(tour_id: tour.id) %></td>
             <td><%= link_to 'My Customers bookmarked', my_customers_bookmarked_url(tour_id: tour.id) %></td>
             <td><%= link_to 'Edit', edit_tour_path(tour) %></td>
@@ -50,7 +50,7 @@
             <% end %>
             <td><%= link_to 'Delete', tour, method: :delete, data: { confirm: 'Are you sure Deleting Tour?' } %></td>
           <% end %>
-          <% if (current_user.customer? || current_user.admin?) && !tour.is_completed? && !tour.canceled && !tour.is_booked?(current_user.id) %>
+          <% if current_user.admin? || (current_user.customer? && !tour.is_completed? && !tour.canceled && !tour.is_booked?(current_user.id)) %>
             <td><%= link_to 'Book Tour', new_booking_path(tour_id: tour.id) %></td>
           <% end %>
         </tr>
@@ -58,7 +58,7 @@
     </tbody>
   </table>
 
-  <% if (current_user.customer? || current_user.admin?) %>
+  <% if current_user.customer? || current_user.admin? %>
     <%= submit_tag 'Bookmark!' %>
     <br><br>
   <% end %>

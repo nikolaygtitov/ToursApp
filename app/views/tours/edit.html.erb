@@ -2,7 +2,7 @@
 
 <%= render 'form', tour: @tour %>
 
-<% if (current_user.admin? || current_user.agent?) && !@tour.is_completed? && !@tour.canceled %>
+<% if current_user.admin? || (current_user.agent? && !@tour.is_completed? && !@tour.canceled) %>
   <%= button_to "Cancel", cancel_tour_tour_path(@tour), method: :put, data: { confirm: 'Are you sure Cancelling Tour?' } %>
   <br> <br>
 <% end %>

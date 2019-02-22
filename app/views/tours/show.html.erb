@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 <%= form_tag(bookmark_url, method: :get)  do %>
 
-  <% if (current_user.customer? || current_user.admin?) %>
+  <% if current_user.customer? || current_user.admin? %>
     <p>
       <strong>Bookmark:</strong>
       <%= check_box_tag 'tour_id[]', @tour.id %>
@@ -87,16 +87,16 @@
 
 <br>
 
-<% if (current_user.admin? || current_user.agent?) && !@tour.is_completed? && !@tour.canceled %>
+<% if current_user.admin? || (current_user.agent? && current_user.id == @tour.user_id && !@tour.is_completed? && !@tour.canceled) %>
   <%= button_to "Cancel", cancel_tour_tour_path(@tour), method: :put, data: { confirm: 'Are you sure Cancelling Tour?' } %>
   <br><br>
 <% end %>
-<% if (current_user.admin? || current_user.customer?) && !@tour.is_completed? && !@tour.canceled && !@tour.is_booked?(current_user.id) %>
+<% if current_user.admin? || (current_user.customer? && !@tour.is_completed? && !@tour.canceled && !@tour.is_booked?(current_user.id)) %>
   <%= button_to "Book", new_booking_url, method: :get, params: {tour_id: @tour.id} %>
   <br><br>
 <% end %>
 
-<% if (current_user.admin? || current_user.agent?) %>
+<% if current_user.admin? || (current_user.agent? && current_user.id == @tour.user_id) %>
   <%= button_to "Booked Customers", my_customers_booked_url, method: :get, params: {tour_id: @tour.id} %>
   <br><br>
   <%= button_to "Bookmarked Customers", my_customers_bookmarked_url, method: :get, params: {tour_id: @tour.id} %>
@@ -107,17 +107,17 @@
 
 <% if @tour.show_status == "Completed" %>
   <h2>Reviews:</h2>
-  <% if (current_user.admin? || current_user.customer?) && @tour.is_taken?(current_user.id) %>
+  <% if current_user.admin? || (current_user.customer? && @tour.is_taken?(current_user.id)) %>
     <% if @tour.get_customer_review(current_user.id).nil? %>
       <%= button_to "Write Review", new_tour_review_url(@tour.id), method: :get %>
     <% else %>
       <%= button_to "Edit Review", edit_tour_review_url(@tour, @tour.get_customer_review(current_user.id)), method: :get %>
     <% end %>
   <% end %>
-  <% if (current_user.admin? || current_user.customer?) && !@tour.is_taken?(current_user.id) %>
+  <% if current_user.admin? || (current_user.customer? && !@tour.is_taken?(current_user.id)) %>
     <%= button_to "View Reviews", show_tour_review_url, method: :get, params: { tour_id: @tour.id} %>
   <% end %>
-  <% if (current_user.admin? || current_user.agent?) && current_user.id == @tour.user_id %>
+  <% if current_user.admin? || (current_user.agent? && current_user.id == @tour.user_id) %>
     <%= button_to "View Reviews", show_tour_review_url, method: :get, params: { tour_id: @tour.id} %>
   <% end %>
 <% else %>
@@ -127,25 +127,25 @@
 <br><br>
 
 <%= link_to 'Home', home_index_url %> |
-<% if (current_user.admin? || current_user.customer?) && !@tour.is_completed? && !@tour.canceled && !@tour.is_booked?(current_user.id) %>
+<% if current_user.admin? || (current_user.customer? && !@tour.is_completed? && !@tour.canceled && !@tour.is_booked?(current_user.id)) %>
   <%= link_to 'Book Tour', new_booking_path(tour_id: @tour.id) %> |
 <% end %>
-<% if (current_user.admin? || current_user.agent?) %>
+<% if current_user.admin? || (current_user.agent? && current_user.id == @tour.user_id) %>
   <%= link_to "Booked Customers", my_customers_booked_url(tour_id: @tour.id) %> |
   <%= link_to "Bookmarked Customers", my_customers_bookmarked_url(tour_id: @tour.id) %> |
 <% end %>
 <% if @tour.show_status == "Completed" %>
-  <% if (current_user.admin? || current_user.customer?) && @tour.is_taken?(current_user.id) %>
+  <% if current_user.admin? || (current_user.customer? && @tour.is_taken?(current_user.id)) %>
     <% if @tour.get_customer_review(current_user.id).nil? %>
       <%= link_to "Write Review", new_tour_review_path(tour_id: @tour.id) %> |
     <% else %>
       <%= link_to 'Edit Review', edit_tour_review_path(@tour, @tour.get_customer_review(current_user.id)) %> |
     <% end %>
   <% end %>
-  <% if (current_user.admin? || current_user.customer?) && !@tour.is_taken?(current_user.id) %>
+  <% if current_user.admin? || (current_user.customer? && !@tour.is_taken?(current_user.id)) %>
     <%= link_to "View Reviews", show_tour_review_url(tour_id: @tour.id) %> |
   <% end %>
-  <% if (current_user.admin? || current_user.agent?) && current_user.id == @tour.user_id %>
+  <% if current_user.admin? || (current_user.agent? && current_user.id == @tour.user_id) %>
     <%= link_to "View Reviews", show_tour_review_url(tour_id: @tour.id) %> |
   <% end %>
 <% end %>

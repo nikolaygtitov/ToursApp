@@ -36,9 +36,6 @@
           <td><%= booking.find_booked_tour.get_waitlist %></td>
           <td><%= booking.find_booked_tour.total_seats %></td>
           <td><%= link_to 'Show Tour', booking.find_booked_tour %></td>
-          <td><%= link_to 'Show Booking', booking %></td>
-          <td><%= link_to 'Edit Booking', edit_booking_url(booking, tour_id: booking.find_booked_tour.id) %></td>
-          <td><%= link_to 'Delete Booking', booking, method: :delete, data: { confirm: 'Are you sure to delete Booking?' } %></td>
         </tr>
       <% end %>
     <% end %>
@@ -48,5 +45,4 @@
 <br>
 
 <%= link_to 'Home', home_index_url %> |
-<%= link_to 'Create New Booking', tours_path %> |
 <%= link_to 'Back', home_index_url %>

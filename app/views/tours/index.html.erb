@@ -1,8 +1,30 @@
 <p id="notice"><%= notice %></p>
+  <h1>Tours</h1>
+    <%= form_tag(tours_path, method: :get) do %>
+      <h4>Search by name:</h4>
+      <%= text_field_tag 'search[tour_name]', @search.tour_name %>
+      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
+    <% end %>
+    <%= form_tag(tours_path, method: :get) do %>
+      <h4>Search by start date  (year-month-day, like2019-02-22):</h4>
+      <%= text_field_tag 'search[date_from]', @search.date_from %>
+      <%= text_field_tag 'search[date_to]', @search.date_to %>
+      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
+    <% end %>
+    <%= form_tag(tours_path, method: :get) do %>
+      <h4>Search by price:(low price, high price)</h4>
+      <%= text_field_tag 'search[price_from]', @search.price_from %>
+      <%= text_field_tag 'search[price_to]', @search.price_to %>
+      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
+    <% end %>
+    <%= form_tag(tours_path, method: :get) do %>
+      <h4>Search by locations visited :</h4>
+      <%= text_field_tag 'search[location]', @search.location %>
+      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
+    <% end %>
+
 
 <%= form_tag(bookmark_url, method: :get)  do %>
-  <h1>Tours</h1>
-
   <table>
     <thead>
       <tr>
@@ -50,7 +72,7 @@
             <% end %>
             <td><%= link_to 'Delete', tour, method: :delete, data: { confirm: 'Are you sure Deleting Tour?' } %></td>
           <% end %>
-          <% if current_user.admin? || (current_user.customer? && !tour.is_completed? && !tour.canceled && !tour.is_booked?(current_user.id)) %>
+          <% if current_user.admin? || (current_user.customer? && !tour.is_completed? && !tour.is_ongoing? && !tour.canceled && !tour.is_booked?(current_user.id)) %>
             <td><%= link_to 'Book Tour', new_booking_path(tour_id: tour.id) %></td>
           <% end %>
         </tr>

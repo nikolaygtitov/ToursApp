@@ -14,6 +14,9 @@ class Tour < ApplicationRecord
   has_attached_file :image, styles: { large:"600x600>", medium:"300x300>", thumb:"150x150#"}
   validates_attachment_content_type :image, content_type: /\Aimage\/.*\z/
 
+
+
+
   def end_date_after_start_date?
     if end_date < start_date
       errors.add :start_date, "Start date cannot be later End date"
@@ -30,6 +33,10 @@ class Tour < ApplicationRecord
     self.end_date < Date.current
   end
 
+  def is_ongoing?
+    self.start_date <= Date.current && self.end_date >= Date.current
+  end
+
   def show_agent_info
     user = User.find(self.user_id)
     "Name: #{user.name} Email: #{user.email}"
@@ -38,7 +45,7 @@ class Tour < ApplicationRecord
   def show_status
     return "Canceled" if self.canceled
     return "Completed" if is_completed?
-    return "On Going" if self.start_date <= Date.current && self.end_date >= Date.current
+    return "On Going" if is_ongoing?
     "In Future"
   end
 
@@ -92,5 +99,14 @@ class Tour < ApplicationRecord
     booking = find_booking(current_user_id)
     booking.bookmark
   end
+
+  def self.search(search)
+    if search
+      where('name LIKE ?', "%#{search}%")
+    else
+      Tour.all
+    end
+  end
+
 
 end

@@ -59,8 +59,15 @@ class Tour < ApplicationRecord
   end
 
   def is_booked?(current_user_id)
-    return false if find_booking(current_user_id).nil?
-    true
+    if find_booking(current_user_id).nil?
+      return false
+    else
+      if find_booking(current_user_id).bookmark
+        return false
+      else
+        return true
+      end
+    end
   end
 
   def get_waitlist

@@ -102,10 +102,8 @@ class BookingsController < ApplicationController
   def bookmark
     params[:tour_id].each do |tour_id|
       booking = Booking.find_by(user_id: current_user.id, tour_id: tour_id)
-      if booking.nil? || booking.blank?
+      if booking.nil? || booking.blank?||booking.bookmark.nil?
         Booking.create!(booked_seats: 0, user_id: current_user.id, tour_id: tour_id, waitlist_seats: 0, bookmark: true)
-      else
-        booking.update_attributes(bookmark: true)
       end
     end
     respond_to do |format|

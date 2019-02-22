@@ -5,7 +5,12 @@ class ToursController < ApplicationController
   # GET /tours
   # GET /tours.json
   def index
-    @tours = Tour.all
+#    @tours = Tour.all
+      @tours= if params[:search]
+      Tour.where('name LIKE ?', "%#{params[:search]}%")
+    else
+      Tour.all
+    end
   end
 
   # GET /tours/1
@@ -84,6 +89,6 @@ class ToursController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tour_params
-      params.require(:tour).permit(:name, :description, :price, :image, :deadline, :start_date, :end_date, :start_location, :country, :state, :total_seats, :canceled, :user_id)
+      params.require(:tour).permit(:name, :description, :price, :image, :deadline, :start_date, :end_date, :start_location, :country, :state, :total_seats, :canceled, :user_id, :search)
     end
 end

@@ -27,7 +27,7 @@
     <tbody>
       <% @tours.each do |tour| %>
         <tr>
-          <% if (current_user.customer? || current_user.admin?) %>
+          <% if current_user.customer? || current_user.admin? %>
             <td><%= check_box_tag 'tour_id[]', tour.id %></td>
           <% end %>
           <td><%= tour.name %></td>

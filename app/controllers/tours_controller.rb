@@ -64,7 +64,7 @@ class ToursController < ApplicationController
   end
 
   def cancel_tour
-    @tour.update_attributes(:canceled, true)
+    @tour.update_attribute(:canceled, true)
     respond_to do |format|
       if @tour.save
         format.html { redirect_to @tour, notice: 'Tour was successfully Cancelled.' }

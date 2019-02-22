@@ -52,7 +52,8 @@ class Booking < ApplicationRecord
         Booking.where("tour_id = ?", this_tour.id).find_each do |customer|
           if customer.waitlist_seats <= this_tour.available_seats
             taken_seats = customer.booked_seats
-            customer.update_attributes(booked_seats: taken_seats + customer.waitlist_seats, waitlist_seats: 0)
+            customer.update_attribute(:booked_seats, taken_seats + customer.waitlist_seats)
+            customer.update_attribute(:waitlist_seats, 0)
             filled_in = true
             break
           end
@@ -61,8 +62,8 @@ class Booking < ApplicationRecord
           Booking.where("tour_id = ?", this_tour.id).find_each do |customer|
             difference = customer.waitlist_seats - this_tour.available_seats
             taken_seats = customer.booked_seats
-            customer.update_attributes(booked_seats: taken_seats + this_tour.available_seats)
-            customer.update_attributes(waitlist_seats: difference)
+            customer.update_attribute(:booked_seats, taken_seats + this_tour.available_seats)
+            customer.update_attribute(:waitlist_seats, difference)
             break
           end
         end

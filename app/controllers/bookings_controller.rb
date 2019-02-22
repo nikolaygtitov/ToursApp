@@ -36,10 +36,15 @@ class BookingsController < ApplicationController
     @booking.tour_id = tour.id
     @booking.booked_seats = 0 if @booking.booked_seats.nil?
     @booking.waitlist_seats = 0 if @booking.waitlist_seats.nil?
+    booking = tour.find_booking(current_user.id)
 
     respond_to do |format|
-      if tour.available_seats < @booking.booked_seats
+      if tour.available_seats < @booking.booked_seats + @booking.waitlist_seats
         format.html { redirect_to new_with_waitlist_path(tour_id: tour.id, default_booked_seats: tour.available_seats, default_waitlist_seats: @booking.waitlist_seats + @booking.booked_seats - tour.available_seats), alert: 'Not enough available seats to Book.' }
+      elsif !booking.nil? && !booking.blank?
+        booking.update_attributes(booked_seats: @booking.booked_seats, waitlist_seats: @booking.waitlist_seats, created_at: Time.now)
+        format.html { redirect_to booking, notice: 'Booking was successfully created.' }
+        format.json { render :show, status: :created, location: booking }
       elsif @booking.save
         format.html { redirect_to @booking, notice: 'Booking was successfully created.' }
         format.json { render :show, status: :created, location: @booking }
@@ -70,10 +75,19 @@ class BookingsController < ApplicationController
   # DELETE /bookings/1
   # DELETE /bookings/1.json
   def destroy
-    @booking.destroy
-    respond_to do |format|
-      format.html { redirect_to bookings_url, notice: 'Booking was successfully destroyed.' }
-      format.json { head :no_content }
+    if @booking.bookmark
+      @booking.booked_seats = 0
+      @booking.waitlist_seats = 0
+      respond_to do |format|
+        format.html { redirect_to my_bookings_url, notice: 'Booking was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      @booking.destroy
+      respond_to do |format|
+        format.html { redirect_to my_bookings_url, notice: 'Booking was successfully destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -100,21 +114,48 @@ class BookingsController < ApplicationController
   # GET /bookmark
   # GET /bookmark.json
   def bookmark
-    params[:tour_id].each do |tour_id|
-      booking = Booking.find_by(user_id: current_user.id, tour_id: tour_id)
-      if booking.nil? || booking.blank?
-        Booking.create!(booked_seats: 0, user_id: current_user.id, tour_id: tour_id, waitlist_seats: 0, bookmark: true)
-      else
-        booking.update_attributes(bookmark: true)
+    if params[:tour_id].nil? || params[:tour_id].blank?
+      respond_to do |format|
+        format.html { redirect_to tours_url, alert: 'Unchecked Tours cannot be Bookmarked!!!' }
+        format.json { render get, status: :ok, location: tours_url }
+      end
+    else
+      params[:tour_id].each do |tour_id|
+        booking = Booking.find_by(user_id: current_user.id, tour_id: tour_id)
+        if booking.nil? || booking.blank?
+          Booking.create!(booked_seats: 0, user_id: current_user.id, tour_id: tour_id, waitlist_seats: 0, bookmark: true)
+        else
+          booking.update_attribute(:bookmark, true)
+        end
+      end
+      respond_to do |format|
+        if params[:tour_id].length == 1
+          format.html { redirect_to Tour.find(params[:tour_id]), notice: 'Tour was successfully Bookmarked.' }
+          format.json { render :show, status: :ok, location: Tour.find(params[:tour_id]) }
+        else
+          format.html { redirect_to tours_url, notice: 'Tours were successfully Bookmarked.' }
+          format.json { render :get, status: :ok, location: tours_url }
+        end
       end
     end
-    respond_to do |format|
-      if params[:tour_id].length == 1
-        format.html { redirect_to Tour.find(params[:tour_id]), notice: 'Tour was successfully Bookmarked.' }
-        format.json { render :show, status: :ok, location: Tour.find(params[:tour_id]) }
-      else
-        format.html { redirect_to tours_url, notice: 'Tours were successfully Bookmarked.' }
-        format.json { render :get, status: :ok, location: tours_url }
+  end
+
+  # GET /undo_bookmark
+  # GET /undo_bookmark.json
+  def undo_bookmark
+    if params[:tour_id].nil? || params[:tour_id].blank?
+      respond_to do |format|
+        format.html { redirect_to customer_bookmarks_url, alert: 'Unchecked Tours cannot be Unbookmarked!!!' }
+        format.json { render get, status: :ok, location: tours_url }
+      end
+    else
+      params[:tour_id].each do |tour_id|
+        booking = Booking.find_by(user_id: current_user.id, tour_id: tour_id)
+        booking.update_attribute(:bookmark, false)
+      end
+      respond_to do |format|
+        format.html { redirect_to customer_bookmarks_url, notice: 'Unbookmark is successful.' }
+        format.json { render :get, status: :ok, location: customer_bookmarks_url }
       end
     end
   end

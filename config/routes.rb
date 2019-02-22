@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'my_customers_bookmarked' => 'bookings#my_customers_bookmarked'
   get 'new_with_waitlist' => 'bookings#new_with_waitlist'
   get 'bookmark' => 'bookings#bookmark'
+  get 'undo_bookmark' => 'bookings#undo_bookmark'
   get 'customer_bookmarks' => 'bookings#customer_bookmarks'
   get 'agent_bookmarks' => 'bookings#agent_bookmarks'
   resources :tours

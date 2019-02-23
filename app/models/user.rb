@@ -1,6 +1,6 @@
 class User < ApplicationRecord
-  has_many :tours
-  has_many :bookings
+  has_many :tours, dependent: :destroy
+  has_many :bookings, dependent: :destroy
   has_many :reviews, dependent: :destroy
 
   # Include default devise modules. Others available are:

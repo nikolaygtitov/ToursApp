@@ -7,6 +7,8 @@
 <% if current_user.admin? %>
   <br>
   <h1>Users section (only for Admin purposes)</h1>
+  <%= link_to 'Create New User', new_user_url %>
+  <br><br>
   <table>
     <tr>
       <th>Name</th>
@@ -30,11 +32,9 @@
       </tr>
     <% end %>
   </table>
-  <br><br>
-  <td><%= link_to 'Create New User', new_user_url %></td>
 <% end %>
 
-<br><br>
+<br>
 
 <h1>Tours section</h1>
 <% if current_user.admin? || current_user.agent? %>

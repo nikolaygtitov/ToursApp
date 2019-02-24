@@ -1,0 +1,45 @@
+<h2>New sign up</h2>
+
+<%= form_for User.new, url: create_user_path do |form| %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, autofocus: true, autocomplete: "name", value: "" %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.email_field :email, autofocus: true, autocomplete: "email", value: "" %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <%= form.label :password %>
+    <em>(6 characters minimum)</em><br />
+    <%= form.password_field :password, autocomplete: "new-password" %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation, autocomplete: "new-password" %>
+  </div>
+
+  <br>
+
+  <div class="field">
+    <br>
+    <%= form.label :'User Role' %>
+    <%= form.select :role, [['Agent', 'agent'], ['Customer', 'customer']] %>
+  </div>
+
+  <br>
+
+  <div class="actions">
+    <%= form.submit "Sign up" %>
+  </div>
+<% end %>

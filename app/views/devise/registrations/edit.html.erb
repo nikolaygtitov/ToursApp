@@ -4,14 +4,18 @@
   <%= render "devise/shared/error_messages", resource: resource %>
 
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %>
     <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
   </div>
 
+  <br>
+
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :email %>
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
+
+  <br>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
@@ -21,25 +25,40 @@
     <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
     <%= f.password_field :password, autocomplete: "new-password" %>
     <% if @minimum_password_length %>
-      <br />
+      <br>
       <em><%= @minimum_password_length %> characters minimum</em>
     <% end %>
   </div>
 
+  <br>
+
   <div class="field">
-    <%= f.label :password_confirmation %><br />
+    <%= f.label :password_confirmation %>
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
   </div>
+
+  <br>
 
   <div class="field">
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
     <%= f.password_field :current_password, autocomplete: "current-password" %>
   </div>
 
-  <div class="field">
-    <%= f.label :'User Role' %><br />
-    <%= f.select :role, [['Agent', 'agent'], ['Customer', 'customer']] %>
-  </div>
+  <br>
+
+  <% if current_user.admin? %>
+    <div class="field">
+      <%= f.label :'User Role' %>
+      <%= f.select :role, User.roles.keys.map { |role| [role.humanize, role]} %>
+    </div>
+  <% else %>
+    <div class="field">
+      <%= f.label :'User Role' %><br />
+      <%= f.select :role, [['Agent', 'agent'], ['Customer', 'customer']] %>
+    </div>
+  <% end %>
+
+  <br>
 
   <div class="actions">
     <%= f.submit "Update" %>

@@ -8,19 +8,25 @@
     <th>Customer name</th>
     <th>Customer email</th>
     <th>Tour name</th>
+    <th>Booked Seats</th>
+    <th>Customer Wait List Seats</th>
     <th colspan="3"></th>
   </tr>
   </thead>
 
   <tbody>
   <% @bookings.each do |booking| %>
-    <% if current_user.id == booking.find_agent_id_of_tour && @tour.id == booking.tour_id %>
-      <tr>
-        <td><%= booking.find_customer.name %></td>
-        <td><%= booking.find_customer.email %></td>
-        <td><%= booking.find_booked_tour.name %></td>
-        <td><%= link_to 'Show Customer', booking.find_customer %></td>
-      </tr>
+    <% if !booking.booked_seats.zero? || !booking.waitlist_seats.zero? %>
+      <% if current_user.admin? || (current_user.id == booking.find_agent_id_of_tour && @tour.id == booking.tour_id) %>
+        <tr>
+          <td><%= booking.find_customer.name %></td>
+          <td><%= booking.find_customer.email %></td>
+          <td><%= booking.find_booked_tour.name %></td>
+          <td><%= booking.booked_seats %></td>
+          <td><%= booking.waitlist_seats %></td>
+          <td><%= link_to 'Show Customer', booking.find_customer %></td>
+        </tr>
+      <% end %>
     <% end %>
   <% end %>
   </tbody>

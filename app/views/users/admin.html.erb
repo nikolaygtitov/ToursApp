@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+<% if current_user.admin? %>
+  <br>
+  <h1>Users section</h1>
+  <p>Only for Admin purposes:</p>
+
+  <%= link_to 'Create New User', new_user_url %>
+  <br><br>
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Password</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.role %></td>
+        <td>*****</td>
+        <td><%= link_to 'Show', user %></td>
+        <td><%= link_to 'Edit', edit_user_path(user) %></td>
+        <% if !user.admin? %>
+          <td><%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <%= button_to 'Create New User', new_user_url, method: :get %>
+<% end %>
+
+<br><br>
+
+<%= link_to 'Home', home_index_url %> |
+<%= link_to 'Back', users_url %>

@@ -39,7 +39,7 @@ class BookingsController < ApplicationController
     booking = tour.find_booking(current_user.id)
 
     respond_to do |format|
-      if tour.available_seats < @booking.booked_seats + @booking.waitlist_seats
+      if tour.available_seats < @booking.booked_seats
         format.html { redirect_to new_with_waitlist_path(tour_id: tour.id, default_booked_seats: tour.available_seats, default_waitlist_seats: @booking.waitlist_seats + @booking.booked_seats - tour.available_seats), alert: 'Not enough available seats to Book.' }
       elsif !booking.nil? && !booking.blank?
         booking.update_attributes(booked_seats: @booking.booked_seats, waitlist_seats: @booking.waitlist_seats, created_at: Time.now)
@@ -63,6 +63,7 @@ class BookingsController < ApplicationController
 
     respond_to do |format|
       if @booking.update(booking_params)
+        @booking.fill_available_seats
         format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
         format.json { render :show, status: :ok, location: @booking }
       else
@@ -78,6 +79,8 @@ class BookingsController < ApplicationController
     if @booking.bookmark
       @booking.booked_seats = 0
       @booking.waitlist_seats = 0
+      @booking.update_attributes(booked_seats: @booking.booked_seats, waitlist_seats: @booking.waitlist_seats)
+      @booking.fill_available_seats
       respond_to do |format|
         format.html { redirect_to my_bookings_url, notice: 'Booking was successfully destroyed.' }
         format.json { head :no_content }
@@ -152,6 +155,9 @@ class BookingsController < ApplicationController
       params[:tour_id].each do |tour_id|
         booking = Booking.find_by(user_id: current_user.id, tour_id: tour_id)
         booking.update_attribute(:bookmark, false)
+        if booking.booked_seats.zero? && booking.waitlist_seats.zero?
+          booking.destroy
+        end
       end
       respond_to do |format|
         format.html { redirect_to customer_bookmarks_url, notice: 'Unbookmark is successful.' }

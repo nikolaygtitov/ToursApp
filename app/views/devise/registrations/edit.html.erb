@@ -46,19 +46,13 @@
 
   <br>
 
-  <% if current_user.admin? %>
-    <div class="field">
-      <%= f.label :'User Role' %>
-      <%= f.select :role, User.roles.keys.map { |role| [role.humanize, role]} %>
-    </div>
-  <% else %>
+  <% if !current_user.admin? %>
     <div class="field">
       <%= f.label :'User Role' %><br />
       <%= f.select :role, [['Agent', 'agent'], ['Customer', 'customer']] %>
     </div>
+    <br>
   <% end %>
-
-  <br>
 
   <div class="actions">
     <%= f.submit "Update" %>

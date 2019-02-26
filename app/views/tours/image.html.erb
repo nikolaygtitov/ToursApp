@@ -1,0 +1,8 @@
+<p id="notice"><%= notice %></p>
+<h1>Tour Image</h1>
+<%= image_tag @tour.image.url(:large) %>
+
+<br><br>
+
+<%= link_to 'Home', home_index_url %> |
+<%= link_to 'Back', @tour %>

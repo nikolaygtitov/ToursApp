@@ -14,7 +14,7 @@
 
   <tbody>
   <% @bookings.each do |booking| %>
-    <% if current_user.id == booking.find_agent_id_of_tour && @tour.id  == booking.tour_id && booking.bookmark %>
+    <% if current_user.admin? || (current_user.id == booking.find_agent_id_of_tour && @tour.id  == booking.tour_id && booking.bookmark) %>
       <tr>
         <td><%= booking.find_customer.name %></td>
         <td><%= booking.find_customer.email %></td>

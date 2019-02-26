@@ -24,6 +24,18 @@ Password:   AdminNCSU
 ```
 * Other preconfigured user accounts or data: **NONE**
 
+### How to..
+This section is about how to test certain functionalities that may appear missing or hard to find in the given User Interface.
+* As Admin I want to login
+  * Email: ngtitov@ncsu.edu
+  * Password: AdminNCSU
+* As Admin I want to View/Create/Edit/Delete existing users in the system
+  * Login as Admin
+  * Go To "User Page" from home page
+  * Under "Users Section" go to "Create/View/Edit/Delete Users"
+* As Customer I want to submit a review for a tour that that I have already taken.
+  * For this functionality, there are two conditions. First, there must exist a Tour that has Status "Completed", meaning it has already taken place in the past (and it must not be Canceled by an Agent). Second, Customer must have at least 1 reserved seat for that tour. If both conditions are met, Customer may leave a review, no other way is possible.
+
 ### Usage
 There are three (3) types of users in the system:
 * Admin
@@ -90,16 +102,6 @@ Anyone is able to Sign Up as a customer using their email, name and password. Af
 
 ### Source Code
 Source code can be found/cloned/downloaded at the [GitHub](https://github.ncsu.edu/ngtitov) repository.
-
-### Acknowledgment
-Please be aware that 90% (refer to the [GitHub](https://github.ncsu.edu/ngtitov) commits history) of the work has been done by me
-* Nikolay G. Titov (ngtitov@ncsu.edu)
-
-Due to the lack of any help whatsoever, heavy load of designing, implementing and testing tasks, and steep learning curve, I could not finish this project even working more than 8 hours per day.
-
-Please be acknowledged that I've dedicated over 120 hours for this project.  
-
-Therefore, I was not able to test all of the implemented functionalities, features and edge-case scenarios.
 
 ### Team
 * EarlyBird (not really sure what it means)

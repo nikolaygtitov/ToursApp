@@ -17,12 +17,20 @@
 
 <p>
 	<strong>Customer name:</strong>
-	<%= @review.get_customer_name %>
+  <% if current_user.admin? || current_user.id == @review.get_tour_agent_id %>
+	  <%= @review.get_customer_name %>
+  <% else %>
+    *****
+  <% end %>
 </p>
 
 <p>
 	<strong>Customer Email</strong>
-	<%= @review.get_customer_email %>
+  <% if current_user.admin? || current_user.id == @review.get_tour_agent_id %>
+    <%= @review.get_customer_email %>
+  <% else %>
+    *****
+  <% end %>
 </p>
 <% if current_user.admin? || current_user.customer? %>
   <%= link_to 'Edit', edit_review_path(@review) %> |

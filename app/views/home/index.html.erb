@@ -1,38 +1,56 @@
 <div>
   <h1>Welcome to Tours Application</h1>
-  <p>Tour Management System:</p>
-  <%= link_to 'User Page', users_url %>
-  <br>
-  <%= link_to 'Tours Page', tours_url %>
-  <br>
+  <p>Sophisticated Tour Management System!</p>
   <% if user_signed_in? %>
-    <% if current_user.admin? || current_user.agent? %>
-      <%= link_to 'My Customers booked my Tours', bookings_url %>
+    <% if current_user.admin? %>
+      <h3>Admin Menu:</h3>
+      <%= link_to 'User Page', users_url %>
+      <br><br>
+      <%= link_to 'Tours Page', tours_url %>
+      <br><br>
+      Customers Pages:
       <br>
-      <%= link_to 'Customers with Bookmarks of my Tours', agent_bookmarks_url %>
-      <br>
-      <%= link_to 'Reviews of my Tours', reviews_url %>
-      <br>
-    <% elsif current_user.admin? || current_user.customer? %>
-      <%= link_to 'My Bookings Page', my_bookings_url %>
-      <br>
-      <%= link_to 'My Bookmarks Page', customer_bookmarks_url %>
-      <br>
-      <%= link_to 'Reviews Page', reviews_url %>
-      <br>
+      <%= link_to 'Booked Tours', bookings_url %> |
+      <%= link_to 'Bookmarked Tours', agent_bookmarks_url %>
+      <br><br>
+      <%= link_to 'View/Edit Reviews', reviews_url %>
     <% end %>
-    <%= link_to 'Search Tour Page', search_url %>
-    <br>
+    <% if current_user.agent? %>
+      <h3>Agent Menu:</h3>
+      <%= link_to 'Agent Page', users_url %>
+      <br><br>
+      <%= link_to 'Tours Page', tours_url %>
+      <br><br>
+      My Customers Pages:
+      <br>
+      <%= link_to 'Booked My Tours', bookings_url %> |
+      <%= link_to 'Bookmarked My Tours', agent_bookmarks_url %>
+      <br><br>
+      <%= link_to 'Reviews Page', reviews_url %>
+    <% end %>
+    <% if current_user.customer? %>
+      <h3>Customer Menu:</h3>
+      <%= link_to 'Customer Page', users_url %>
+      <br><br>
+      <%= link_to 'Tours Page', tours_url %>
+      <br><br>
+      <%= link_to 'My Bookings Page', my_bookings_url %>
+      <br><br>
+      <%= link_to 'My Bookmarks Page', customer_bookmarks_url %>
+      <br><br>
+      <%= link_to 'Reviews Page', reviews_url %>
+    <% end %>
+    <br><br>
+    <%= link_to 'Search Tour', search_url %>
   <% else %>
-    <%= link_to 'Customers Page', bookings_url %>
-    <br>
-    <%= link_to 'Bookings Page', bookings_url %>
-    <br>
+    <h3>User Menu:</h3> <p>You're not logged in. Please log in or sign up before proceed!</p>
+    <%= link_to 'My Page', users_url %>
+    <br><br>
+    <%= link_to 'Tours Page', tours_url %>
+    <br><br>
     <%= link_to 'Reviews Page', reviews_url %>
-    <br>
-    <%= link_to 'Bookmarks Page', agent_bookmarks_url %>
-    <br>
+    <br><br>
     <%= link_to 'Search Tour Page', search_url %>
-    <br>
+    <br><br>
   <% end %>
 </div>

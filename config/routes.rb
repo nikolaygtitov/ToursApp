@@ -19,13 +19,15 @@ Rails.application.routes.draw do
     end
   end
   get 'search' => 'tours#search'
-  get 'home/index'
+  get 'image' => 'tours#image'
 
+  get 'home/index'
 
   devise_for :users
   resources :users, except: :create
-
   post 'create_user' => 'users#create', as: :create_user
+  get 'admin' => 'users#admin'
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root 'home#index'

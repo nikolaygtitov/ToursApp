@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>List of all Customers who Bookmarked my Tours</h1>
+<h1>List of All Customers Bookmarked my Tours</h1>
 
 <table>
   <thead>
@@ -22,7 +22,7 @@
 
   <tbody>
     <% @bookings.each do |booking| %>
-      <% if current_user.id == booking.find_agent_id_of_tour && booking.bookmark %>
+      <% if current_user.admin? || (current_user.id == booking.find_agent_id_of_tour && booking.bookmark) %>
         <tr>
           <td><%= booking.find_customer.name %></td>
           <td><%= booking.find_customer.email %></td>
@@ -38,11 +38,7 @@
           <td><%= link_to 'Show Tour', booking.find_booked_tour %></td>
           <td><%= link_to 'Show Customer', booking.find_customer %></td>
           <td><%= link_to 'Edit Tour', edit_tour_url(booking.find_booked_tour) %></td>
-          <% if !booking.find_booked_tour.is_completed? && !booking.find_booked_tour.canceled %>
-            <td><%= link_to 'Cancel', cancel_tour_tour_url(booking.find_booked_tour), method: :put, data: { confirm: 'Are you sure Cancelling Tour?' } %></td>
-          <% end %>
-          <td><%= link_to 'Delete Tour', booking.find_booked_tour, method: :delete, data: { confirm: 'Are you sure Deleting Tour?' } %></td>
-        </tr>
+         </tr>
       <% end %>
     <% end %>
   </tbody>

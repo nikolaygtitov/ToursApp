@@ -1,40 +1,15 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Let's Get Started!<br>What do you want to do?</h1>
+<h1>Let's Get Started!</h1>
 
 <%= link_to 'Edit/Delete Profile', edit_user_registration_url %>
 
 <% if current_user.admin? %>
+  <h1>Users section</h1>
+  Only for Admin purposes:<br>
+  <%= link_to 'Create/View/Edit/Delete Users', admin_url %>
   <br>
-  <h1>Users section (only for Admin purposes)</h1>
-  <%= link_to 'Create New User', new_user_url %>
-  <br><br>
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.role %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <% if !user.admin? %>
-          <td><%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </table>
 <% end %>
-
-<br>
 
 <h1>Tours section</h1>
 <% if current_user.admin? || current_user.agent? %>
@@ -53,11 +28,14 @@
   <%= link_to 'My Bookings', my_bookings_url %>
 <% end %>
 
-<% if current_user.admin? || current_user.agent? %>
-  <h1>Reviews section</h1>
-  <%= link_to 'View Reviews of My Tours', reviews_url %>
-<% end %>
+<h1>Reviews section</h1>
+<%= link_to 'Tours Reviews', reviews_url %>
 
-<br><br>
+<br>
+
+<h1>Search section</h1>
+<%= link_to 'Search Tour', search_url %>
+
+<br><br><br>
 
 <%= link_to 'Home', home_index_url %>

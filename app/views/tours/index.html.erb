@@ -11,9 +11,7 @@
         <% end %>
         <th>Name</th>
         <th>Price</th>
-        <th>Booking deadline</th>
         <th>Start date</th>
-        <th>End date</th>
         <th>Start location</th>
         <th>Available seats</th>
         <th>Wait list</th>
@@ -32,15 +30,13 @@
           <% end %>
           <td><%= tour.name %></td>
           <td><%= tour.price %></td>
-          <td><%= tour.deadline %></td>
           <td><%= tour.start_date %></td>
-          <td><%= tour.end_date %></td>
           <td><%= tour.start_location %></td>
           <td><%= tour.available_seats %></td>
           <td><%= tour.get_waitlist %></td>
           <td><%= tour.total_seats %></td>
           <td><%= tour.show_status %></td>
-          <td><%= link_to 'Show', tour %></td>
+          <td><%= link_to 'Details', tour %></td>
           <% if current_user.admin? || (current_user.agent? && current_user.id == tour.user_id) %>
             <td><%= link_to 'My Customers booked', my_customers_booked_url(tour_id: tour.id) %></td>
             <td><%= link_to 'My Customers bookmarked', my_customers_bookmarked_url(tour_id: tour.id) %></td>
@@ -65,6 +61,11 @@
 <% end %>
 
 <br>
+
+<% if current_user.agent? || current_user.admin? %>
+  <%= button_to 'Create Tour', new_tour_url, method: :get %>
+  <br><br>
+<% end %>
 
 <%= link_to 'Home', home_index_url %> |
 

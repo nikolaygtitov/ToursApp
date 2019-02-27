@@ -18,14 +18,19 @@
   <tbody>
     <% @reviews.each do |review| %>
       <tr>
-        <td><%= review.get_customer_name %></td>
-        <td><%= review.get_customer_email %></td>
+        <% if current_user.admin? || (current_user.agent? && current_user.id == review.get_tour_agent_id) || (current_user.customer? && review.is_reviewed?(current_user.id)) %>
+          <td><%= review.get_customer_name %></td>
+          <td><%= review.get_customer_email %></td>
+        <% else %>
+          <td>*****</td>
+          <td>*****</td>
+        <% end %>
         <td><%= @tour.name %></td>
         <td><%= review.rating %></td>
         <td><%= review.subject %></td>
         <td><%= review.content %></td>
-        <td><%= link_to 'Show', review %></td>
-        <% if current_user.admin? %>
+        <td><%= link_to 'Details', review %></td>
+        <% if current_user.admin? || (current_user.customer? && review.is_reviewed?(current_user.id)) %>
           <td><%= link_to 'Edit', edit_review_path(review) %></td>
           <td><%= link_to 'Destroy', review, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
@@ -34,10 +39,6 @@
   </tbody>
 </table>
 
-<br>
-
-<% if current_user.admin? %>
-  <%= link_to 'New Review', new_review_path %>
-<% end %>
+<br><br>
 
 <%= link_to 'Back to Tour', @tour %>

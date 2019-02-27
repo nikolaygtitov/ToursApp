@@ -18,7 +18,7 @@
   <tbody>
     <% @reviews.each do |review| %>
       <tr>
-        <% if current_user.admin? || (current_user.agent? && current_user.id == review.get_tour_agent_id) %>
+        <% if current_user.admin? || (current_user.agent? && current_user.id == review.get_tour_agent_id) || (current_user.customer? && review.is_reviewed?(current_user.id)) %>
           <td><%= review.get_customer_name %></td>
           <td><%= review.get_customer_email %></td>
         <% else %>
@@ -30,7 +30,7 @@
         <td><%= review.subject %></td>
         <td><%= review.content %></td>
         <td><%= link_to 'Details', review %></td>
-        <% if current_user.admin? %>
+        <% if current_user.admin? || (current_user.customer? && review.is_reviewed?(current_user.id)) %>
           <td><%= link_to 'Edit', edit_review_path(review) %></td>
           <td><%= link_to 'Destroy', review, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
@@ -42,7 +42,4 @@
 <br>
 
 <%= link_to 'Home', home_index_url %> |
-<% if current_user.admin? %>
-  <%= link_to 'New Review', new_review_path %> |
-<% end %>
 <%= link_to 'Back to Tours', tours_url %>

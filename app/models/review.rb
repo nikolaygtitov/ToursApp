@@ -23,4 +23,10 @@ class Review < ApplicationRecord
     find_booked_tour.user_id
   end
 
+  def is_reviewed?(current_user_id)
+    review = Review.find_by(id: self.id, user_id: current_user_id)
+    return false if review.nil?
+    true
+  end
+
 end

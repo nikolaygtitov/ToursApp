@@ -6,9 +6,10 @@ class ToursController < ApplicationController
   # GET /tours.json
   def index
       @tours = Tour.all
-      #@tours = Tour.all
-      @search = TourSearch.new(params[:search])
-      @tours = @search.scope
+      if(params[:search])
+        @search = TourSearch.new(params[:search])
+        @tours = @search.scope
+    end
   end
 
   # GET /tours/1

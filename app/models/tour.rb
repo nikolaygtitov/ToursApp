@@ -97,12 +97,12 @@ class Tour < ApplicationRecord
     booking.bookmark
   end
 
-  def self.search(search)
-    if search
-      where('name LIKE ?', "%#{search}%")
-    else
-      Tour.all
-    end
-  end
+  # def self.search(search)
+  #   if search
+  #     where('name LIKE ?', "%#{search}%")
+  #   else
+  #     Tour.all
+  #   end
+  # end
 
 end

@@ -1,8 +1,10 @@
 require 'test_helper'
 
 class ToursControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
   setup do
     @tour = tours(:one)
+    sign_in(users(:one))
   end
 
   test "should get index" do
@@ -17,7 +19,7 @@ class ToursControllerTest < ActionDispatch::IntegrationTest
 
   test "should create tour" do
     assert_difference('Tour.count') do
-      post tours_url, params: { tour: { canceled: @tour.canceled, country: @tour.country, deadline: @tour.deadline, description: @tour.description, end_date: @tour.end_date, image: @tour.image, name: @tour.name, price: @tour.price, start_date: @tour.start_date, start_location: @tour.start_location, state: @tour.state, total_seats: @tour.total_seats, user_id: @tour.user_id } }
+      post tours_url, params: { tour: { canceled: @tour.canceled, country: @tour.country, deadline: @tour.deadline, description: @tour.description, end_date: @tour.end_date, name: @tour.name, price: @tour.price, start_date: @tour.start_date, start_location: @tour.start_location, state: @tour.state, total_seats: @tour.total_seats, user_id: @tour.user_id } }
     end
 
     assert_redirected_to tour_url(Tour.last)
@@ -34,7 +36,7 @@ class ToursControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update tour" do
-    patch tour_url(@tour), params: { tour: { canceled: @tour.canceled, country: @tour.country, deadline: @tour.deadline, description: @tour.description, end_date: @tour.end_date, image: @tour.image, name: @tour.name, price: @tour.price, start_date: @tour.start_date, start_location: @tour.start_location, state: @tour.state, total_seats: @tour.total_seats, user_id: @tour.user_id } }
+    patch tour_url(@tour), params: { tour: { canceled: @tour.canceled, country: @tour.country, deadline: @tour.deadline, description: @tour.description, end_date: @tour.end_date, name: @tour.name, price: @tour.price, start_date: @tour.start_date, start_location: @tour.start_location, state: @tour.state, total_seats: @tour.total_seats, user_id: @tour.user_id } }
     assert_redirected_to tour_url(@tour)
   end
 

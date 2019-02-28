@@ -25,26 +25,12 @@ class Booking < ApplicationRecord
 
   def fill_available_seats
     this_tour = find_booked_tour
-    filled_in = false
     if this_tour.get_waitlist > 0 && this_tour.available_seats > 0
       Booking.where("tour_id = ?", this_tour.id).find_each do |customer|
         if customer.waitlist_seats > 0 && customer.waitlist_seats <= this_tour.available_seats
           taken_seats = customer.booked_seats
           customer.update_attribute(:booked_seats, taken_seats + customer.waitlist_seats)
           customer.update_attribute(:waitlist_seats, 0)
-          filled_in = true
-          break
-        end
-      end
-      unless filled_in
-        Booking.where("tour_id = ?", this_tour.id).find_each do |customer|
-          if customer.waitlist_seats > 0
-            difference = customer.waitlist_seats - this_tour.available_seats
-            taken_seats = customer.booked_seats
-            customer.update_attribute(:booked_seats, taken_seats + this_tour.available_seats)
-            customer.update_attribute(:waitlist_seats, difference)
-            break
-          end
         end
       end
     end

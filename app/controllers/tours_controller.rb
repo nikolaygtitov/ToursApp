@@ -5,10 +5,10 @@ class ToursController < ApplicationController
   # GET /tours
   # GET /tours.json
   def index
-      @tours = Tour.all
-      if(params[:search])
-        @search = TourSearch.new(params[:search])
-        @tours = @search.scope
+    @tours = Tour.all
+    if(params[:search])
+      @search = TourSearch.new(params[:search])
+      @tours = @search.scope
     end
   end
 

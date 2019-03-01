@@ -58,11 +58,12 @@ class BookingsController < ApplicationController
   # PATCH/PUT /bookings/1
   # PATCH/PUT /bookings/1.json
   def update
-    @booking.booked_seats = 0 if @booking.booked_seats.nil?
-    @booking.waitlist_seats = 0 if @booking.waitlist_seats.nil?
+    tour = Tour.find(params[:tour_id])
 
     respond_to do |format|
-      if @booking.update(booking_params)
+      if tour.available_seats + @booking.booked_seats < booking_params[:booked_seats].to_i
+        format.html { redirect_to edit_booking_url(@booking, tour_id: @booking.find_booked_tour.id, default_booked_seats: tour.available_seats + @booking.booked_seats, default_waitlist_seats: booking_params[:booked_seats].to_i + booking_params[:waitlist_seats].to_i - tour.available_seats - @booking.booked_seats), alert: 'Not enough available seats to Book.' }
+      elsif @booking.update(booking_params)
         @booking.fill_available_seats
         format.html { redirect_to @booking, notice: 'Booking was successfully updated.' }
         format.json { render :show, status: :ok, location: @booking }

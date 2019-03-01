@@ -12,8 +12,8 @@ For reviewing and grading purposes refer to the above link.
 * Credentials for preconfigured Admin user account:
 ```
 Name:       Admin
-Email:      ngtitov@ncsu.edu
-Password:   AdminNCSU
+Email:      admin@ncsu.edu
+Password:   admin!
 ```
 * Other preconfigured user accounts or data: **NONE**
 
@@ -22,8 +22,8 @@ This section is about how to test certain functionalities that may appear missin
 Each functionality depends on the user type of the system. Below are the main functionalities for each user type.
 #### As Admin I want to ..
 * Login
-  * Email: ngtitov@ncsu.edu
-  * Password: AdminNCSU
+  * Email:      admin@ncsu.edu
+  * Password:   admin!
 * Edit my profile name
   * From home page go to "User Page"
   * Click Edit/Delete Profile

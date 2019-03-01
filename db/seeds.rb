@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create(name:  "Admin",
-            email: "ngtitov@ncsu.edu",
-            password: "AdminNCSU",
-            password_confirmation: "AdminNCSU",
+            email: "admin@ncsu.edu",
+            password: "admin!",
+            password_confirmation: "admin!",
             role: 0)

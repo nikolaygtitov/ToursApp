@@ -1,6 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<h1>List of All Customers Booked my Tours</h1>
+<h1>List of All Customers Booked My Tours</h1>
 
 <table>
   <thead>
@@ -24,8 +24,8 @@
 
   <tbody>
     <% @bookings.each do |booking| %>
-      <% if !booking.booked_seats.zero? || !booking.waitlist_seats.zero? %>
-        <% if current_user.admin? || current_user.id == booking.find_agent_id_of_tour %>
+      <% if current_user.id == booking.find_agent_id_of_tour %>
+        <% if !booking.booked_seats.zero? || !booking.waitlist_seats.zero? %>
           <tr>
             <td><%= booking.find_customer.name %></td>
             <td><%= booking.find_customer.email %></td>

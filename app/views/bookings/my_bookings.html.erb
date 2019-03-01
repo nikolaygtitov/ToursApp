@@ -22,26 +22,24 @@
 
   <tbody>
     <% @bookings.each do |booking| %>
-      <% if !booking.booked_seats.zero? || !booking.waitlist_seats.zero? %>
-        <% if current_user.admin? || (current_user.id == booking.user_id) %>
-          <tr>
-            <td><%= booking.find_booked_tour.name %></td>
-            <td><%= booking.find_booked_tour.price %></td>
-            <td><%= booking.find_booked_tour.start_location %></td>
-            <td><%= booking.find_booked_tour.start_date %></td>
-            <td><%= booking.find_booked_tour.end_date %></td>
-            <td><%= booking.find_booked_tour.show_status %></td>
-            <td><%= booking.booked_seats %></td>
-            <td><%= booking.waitlist_seats %></td>
-            <td><%= booking.find_booked_tour.available_seats %></td>
-            <td><%= booking.find_booked_tour.get_waitlist %></td>
-            <td><%= booking.find_booked_tour.total_seats %></td>
-            <td><%= link_to 'Details', booking %></td>
-            <td><%= link_to 'Show Tour', booking.find_booked_tour %></td>
-            <td><%= link_to 'Edit Booking', edit_booking_url(booking, tour_id: booking.find_booked_tour.id) %></td>
-            <td><%= link_to 'Delete Booking', booking, method: :delete, data: { confirm: 'Are you sure to delete Booking?' } %></td>
-          </tr>
-        <% end %>
+      <% if current_user.id == booking.user_id && (!booking.booked_seats.zero? || !booking.waitlist_seats.zero?) %>
+        <tr>
+          <td><%= booking.find_booked_tour.name %></td>
+          <td><%= booking.find_booked_tour.price %></td>
+          <td><%= booking.find_booked_tour.start_location %></td>
+          <td><%= booking.find_booked_tour.start_date %></td>
+          <td><%= booking.find_booked_tour.end_date %></td>
+          <td><%= booking.find_booked_tour.show_status %></td>
+          <td><%= booking.booked_seats %></td>
+          <td><%= booking.waitlist_seats %></td>
+          <td><%= booking.find_booked_tour.available_seats %></td>
+          <td><%= booking.find_booked_tour.get_waitlist %></td>
+          <td><%= booking.find_booked_tour.total_seats %></td>
+          <td><%= link_to 'Details', booking %></td>
+          <td><%= link_to 'Show Tour', booking.find_booked_tour %></td>
+          <td><%= link_to 'Edit Booking', edit_booking_url(booking, tour_id: booking.find_booked_tour.id) %></td>
+          <td><%= link_to 'Delete Booking', booking, method: :delete, data: { confirm: 'Are you sure to delete Booking?' } %></td>
+        </tr>
       <% end %>
     <% end %>
   </tbody>

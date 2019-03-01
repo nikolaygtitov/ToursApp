@@ -4,47 +4,40 @@
   <% if user_signed_in? %>
     <% if current_user.admin? %>
       <h3>Admin Menu:</h3>
-      <%= link_to 'User Page', users_url %>
-      <br><br>
-      <%= link_to 'Tours Page', tours_url %>
-      <br><br>
-      Customers Pages:
-      <br>
-      <%= link_to 'Booked Tours', bookings_url %> |
-      <%= link_to 'Bookmarked Tours', agent_bookmarks_url %>
-      <br><br>
-      <%= link_to 'View/Edit Reviews', reviews_url %>
-    <% end %>
-    <% if current_user.agent? %>
+      <%= link_to 'Admin and Users Page', users_url %>
+    <% elsif current_user.agent? %>
       <h3>Agent Menu:</h3>
       <%= link_to 'Agent Page', users_url %>
-      <br><br>
-      <%= link_to 'Tours Page', tours_url %>
-      <br><br>
-      My Customers Pages:
-      <br>
-      <%= link_to 'Booked My Tours', bookings_url %> |
-      <%= link_to 'Bookmarked My Tours', agent_bookmarks_url %>
-      <br><br>
-      <%= link_to 'Reviews Page', reviews_url %>
-    <% end %>
-    <% if current_user.customer? %>
+    <% elsif current_user.customer? %>
       <h3>Customer Menu:</h3>
       <%= link_to 'Customer Page', users_url %>
+    <% end %>
+    <br><br>
+    <%= link_to 'Tours Page', tours_url %>
+    <br><br>
+
+    <% if current_user.admin? || current_user.agent? %>
+      My Customers Pages:
+      <br>
+      <%= link_to 'Who Booked My Tours', bookings_url %> |
+      <%= link_to 'Who Bookmarked My Tours', agent_bookmarks_url %>
       <br><br>
-      <%= link_to 'Tours Page', tours_url %>
-      <br><br>
-      <%= link_to 'My Bookings Page', my_bookings_url %>
-      <br><br>
+    <% end %>
+
+    <% if current_user.admin? || current_user.customer? %>
+      My Reservations Pages:
+      <br>
+      <%= link_to 'My Bookings Page', my_bookings_url %> |
       <%= link_to 'My Bookmarks Page', customer_bookmarks_url %>
       <br><br>
-      <%= link_to 'Reviews Page', reviews_url %>
     <% end %>
+
+    <%= link_to 'Reviews Page', reviews_url %>
     <br><br>
     <%= link_to 'Search Tour', search_url %>
   <% else %>
     <h3>User Menu:</h3> <p>You're not logged in. Please log in or sign up before proceed!</p>
-    <%= link_to 'My Page', users_url %>
+    <%= link_to 'User Page', users_url %>
     <br><br>
     <%= link_to 'Tours Page', tours_url %>
     <br><br>

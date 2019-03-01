@@ -48,6 +48,8 @@ class ToursController < ApplicationController
   def update
     respond_to do |format|
       if @tour.update(tour_params)
+        booking = Booking.find_by(tour_id: @tour.id)
+        booking.fill_available_seats unless booking.nil?
         format.html { redirect_to @tour, notice: 'Tour was successfully updated.' }
         format.json { render :show, status: :ok, location: @tour }
       else

@@ -2,6 +2,7 @@
 
 <h1>Let's Get Started!</h1>
 
+<h1>My Profile</h1>
 <%= link_to 'Edit/Delete Profile', edit_user_registration_url %>
 
 <% if current_user.admin? %>
@@ -21,11 +22,16 @@
   <br>
 <% end %>
 
-<br>
-
+<h1>My Customers section</h1>
+<% if current_user.admin? || current_user.agent? %>
+  <%= link_to 'Who Booked My Tours', bookings_url %> |
+  <%= link_to 'Who Bookmarked My Tours', agent_bookmarks_url %>
+  <br>
+<% end %>
 <% if current_user.admin? || current_user.customer? %>
-  <h1>My Bookings section</h1>
-  <%= link_to 'My Bookings', my_bookings_url %>
+  <h1>My Reservations section</h1>
+  <%= link_to 'My Bookings', my_bookings_url %> | <%= link_to 'My Bookmarks Page', customer_bookmarks_url %>
+  <br>
 <% end %>
 
 <h1>Reviews section</h1>

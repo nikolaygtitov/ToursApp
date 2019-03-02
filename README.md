@@ -164,6 +164,14 @@ For reference, the [Home Page](https://cryptic-crag-14767.herokuapp.com/)
   * From home page navigate to "My Reservations Pages" and follow "My Bookmarks Page" link
   * Mark check-boxes of Tours you want to undo bookmark
   * Click "Undo bookmark" button
+  
+#### Search
+Search can ONLY be done at one field at the time. For example, only one field at the time produces the search results
+* Search by name
+* Search by dates
+* Search by price
+* Search by availability
+* Search by itinerary
 
 ### Application Development Environment
 * Ubuntu 18.04.2 LTS
@@ -234,6 +242,12 @@ Anyone is able to Sign Up as a customer using their email, name and password. Af
   * Submit a review for a tour that that customer has already taken
   * Edit or delete a review they previously submitted
   * Customer is able to delete his own account
+
+
+### Assumptions
+While developing an App I've made some assumptions on what my App would not be tested against:
+* User of App may not navigate over the App using URL links (e.g. users/edit) as this may break role types among users (Customer may be available to see and act on pages for Agent's use and vice versa)
+  * Please follow only links and buttons displayed strictly in the App
 
 
 ### Source Code

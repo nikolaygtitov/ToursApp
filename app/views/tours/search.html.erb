@@ -1,27 +1,33 @@
 <p id="notice"><%= notice %></p>
-  <h1>Tours</h1>
+  <h1>Search Tours</h1>
     <%= form_tag(tours_path, method: :get) do %>
-      <h4>Search by name:</h4>
-      <%= text_field_tag 'search[tour_name]', @search.tour_name %>
-      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
+      <h3>Search by name:</h3>
+      <%= text_field_tag 'search[tour_name]', @search.tour_name %> <br>
+      <%= submit_tag ("Search") %>
+
+      <h3>Search by dates (YYYY-MM-DD, example 2019-02-22):</h3>
+      <p>From:</p><%= text_field_tag 'search[date_from]', @search.date_from %>
+      <br>
+      <p>To:</p><%= text_field_tag 'search[date_to]', @search.date_to %> <br>
+      <%= submit_tag ("Search") %>
+
+      <h3>Search by price:</h3>
+      <p>Min:</p><%= text_field_tag 'search[price_from]', @search.price_from %>
+      <br>
+      <p>Max:</p><%= text_field_tag 'search[price_to]', @search.price_to %> <br>
+      <%= submit_tag ("Search") %>
+
+      <h3>Search by seats availability: </h3>
+      <%= text_field_tag 'search[seats]', @search.seats %> <br>
+      <%= submit_tag ("Search") %>
+
+      <h3>Search by tour itinerary: </h3>
+      <%= text_field_tag 'search[location]', @search.location %> <br>
+      <%= submit_tag ("Search") %>
+
     <% end %>
-    <%= form_tag(tours_path, method: :get) do %>
-      <h4>Search by start date (YYYY-MM-DD, example 2019-02-22):</h4>
-      <%= text_field_tag 'search[date_from]', @search.date_from %>
-      <%= text_field_tag 'search[date_to]', @search.date_to %>
-      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
-    <% end %>
-    <%= form_tag(tours_path, method: :get) do %>
-      <h4>Search by price:(min price, max price)</h4>
-      <%= text_field_tag 'search[price_from]', @search.price_from %>
-      <%= text_field_tag 'search[price_to]', @search.price_to %>
-      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
-    <% end %>
-    <%= form_tag(tours_path, method: :get) do %>
-      <h4>Search by locations visited :</h4>
-      <%= text_field_tag 'search[location]', @search.location %>
-      <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
-    <% end %>
+
+<br><br>
 
 <%= link_to 'Home', home_index_url %> |
 <% if current_user.agent? || current_user.admin? %>

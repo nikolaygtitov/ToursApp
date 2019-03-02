@@ -15,107 +15,155 @@ Name:       Admin
 Email:      admin@ncsu.edu
 Password:   admin!
 ```
-* Other preconfigured user accounts or data: **NONE**
+* Other preconfigured user accounts or data:
+```
+Name:       Agent1
+Email:      agent1@gmail.edu
+Password:   Agent1
+
+Name:       Customer1
+Email:      customer1@gmail.edu
+Password:   Customer1
+```
 
 ### How to ..
 This section is about how to test certain functionalities that may appear missing or hard to find in the given User Interface.
 Each functionality depends on the user type of the system. Below are the main functionalities for each user type.
+For reference, the [Home Page](https://cryptic-crag-14767.herokuapp.com/)
 #### As Admin I want to ..
 * Login
   * Email:      admin@ncsu.edu
   * Password:   admin!
 * Edit my profile name
-  * From home page go to "User Page"
-  * Click Edit/Delete Profile
+  * From home page follow "Admin and Users Page" link
+  * Under "My Profile" click "Edit/Delete Profile"
 * Create/View/Edit/Delete Customer and Agent accounts
-  * From home page go to "User Page"
-  * Under "Users Section" click on Create/View/Edit/Delete Users
+  * From home page follow "Admin and Users Page" link
+  * Under "Users Section" click on "Create/View/Edit/Delete Users"
+  * *Note:* Admin user may edit other users' accounts including name, email, and role; however, Admin is unable to edit/change user's password due to security reasons
 * Create/View/Edit/Delete/Cancel/Bookmark Tours
-  * From home page go to "Tours Page"
+  * From home page follow "Tours Page" link
+  * *Note:* Admin may edit/cancel/delete any listed tours
+  * If tour's available seats are increased, the algorithm moves customers from wait list of a Tour into booked seats
+  * Customers are moved from the wait list into booked in the following order:
+    * Customers whose wait list seats <= tours available seats based on FIFO methodology
+    * If there are still available seats remaining after the run, customer is partially (some seats) booked in the tour based on FIFO methodology, but still has requested seats remaining in the wait list of the tour
+  * If tour's available seats are decreased, the algorithm does not kick any booked customers out of the tour
+    * Number of available seats of a Tour will be shown as negative integer 
 * View/Edit/Delete All Reviews
-  * From home page go to "View/Edit Reviews"
+  * From home page follow "Reviews Page" link
 * Create Review for a particular Tour or View/Edit/Delete Review for a particular Tour
   * One condition must be met:
     
     a) Tour must have Status "Completed", meaning it has already taken place in the past (and it must not be Canceled by an Agent)
-  * Reviews can only be written from Tour's page
-  * If above condition is met, from home page go to "Tours Page" and click on "Details" of the Tour you want to write/view/edit/delete review
-  * Scroll down to "Reviews" section and perform action you are interested in
-* View a list of Users booked in a tour and their detailed information
-  * From home page go to "Tours Page"
+  * Reviews may only be written from the Tour's page
+  * If above condition is met, from home page follow "Tours Page" link and click on "Details" of the Tour you want to write/view/edit/delete review
+  * Scroll down to "Reviews" section and perform action you are interested in ("Your Review", "Write Review", "Edit Review", "Delete")
+* View a list of Users booked in any of my tours and their detailed information
+  * From home page navigate to "My Customers Page" and follow "Who Booked My Tours" link
+* View a list of Users booked in particular tour and their detailed information
+  * From home page follow "Tours Page" link
    
-    a) Click "My Customers booked" link besides the Tour that you are interested in
-    b) Click "Details" link, scroll down and click "Booked Customers"
-* View a list of Users bookmarked a tour and their detailed information
-    * From home page go to "Tours Page"
+    a) Follow "My Customers booked" link beside the Tour (links are located to the right of each tour) that you are interested in
+    b) Alternative: Follow "Details" link of the Tour, scroll down and click "Booked Customers" button
+* View a list of Users bookmarked any of my tours and their detailed information
+  * From home page navigate to "My Customers Page" and follow "Who Bookmarked My Tours" link
+* View a list of Users bookmarked particular tour and their detailed information
+    * From home page follow "Tours Page" link
      
-      a) Click "My Customers bookmarked" link besides the Tour that you are interested in
-      b) Click "Details" link, scroll down and click "Bookmarked Customers"
+      a) Follow "My Customers bookmarked" link beside the Tour (links are located to the right of each tour) that you are interested in
+      b) Alternative: Follow "Details" link of the Tour, scroll down and click "Bookmarked Customers" button
 
 #### As Agent I want to ..
 * Edit my profile name
-  * From home page go to "Agent Page"
-  * Click Edit/Delete Profile
+  * From home page follow "Agent Page" link
+  * Under "My Profile" and click "Edit/Delete Profile"
 * Create/View/Edit/Delete/Cancel Tours
+  * From home page follow "Tours Page" link
   * Agent may View all Tours in the system (not only his/her tours)
   * Agent may only Edit/Cancel/Delete Tours that he/she listed
   * Agent may not Edit/Cancel/Delete Tours that he/she did not list
   * Agent may Create any number of Tours
-  * From home page go to "Tours Page"
-* View all the Customers booked for any Tours listed by him/her
-  * From home page under "My Customers Pages" click on "Booked My Tours"
-  * Alternative: From home page go to "Tours Page" and at the bottom of the page click link "List All My Customers"
-* View all the Customers bookmarked (interested) for any Tours listed by him/her
-  * From home page under "My Customers Pages" click on "Bookmarked My Tours"
-  * Alternative: From home page go to "Tours Page" and at the bottom of the page click link "List Customers With Bookmarks"
+  * *Note:* Agent may edit/cancel/delete any tours strictly listed by him/her
+  * If tour's available seats are increased, the algorithm moves customers from wait list of a Tour into booked seats
+  * Customers are moved from the wait list into booked in the following order:
+    * Customers whose wait list seats <= tours available seats based on FIFO methodology
+    * If there are still available seats remaining after the run, customer is partially (some seats) booked in the tour based on FIFO methodology, but still has requested seats remaining in the wait list of the tour
+  * If tour's available seats are decreased, the algorithm does not kick any booked customers out of the tour
+    * Number of available seats of a Tour will be shown as negative integer 
+* View all the Customers booked for any Tours listed by me
+  * From home page navigate to "My Customers Pages" and follow "Who Booked My Tours" link
+  * Alternative: From home page follow "Tours Page" link and at the bottom of the page follow "List All My Customers" link
+* View all the Customers bookmarked (interested) for any Tours listed by me
+  * From home page navigate to "My Customers Pages" and follow "Who Bookmarked My Tours" link
+  * Alternative: From home page follow "Tours Page" link and at the bottom of the page follow "List Customers With Bookmarks" link
 * View all Tours' Reviews
-  * From home page go to "Reviews Page"
+  * From home page follow "Reviews Page" link
   * Agent may view all available Reviews for all Tours
   * Agent may see Customers' information who wrote Review only if he/she listed the Tour that Review belongs to
   * Agent may not see other Customers' information who wrote Review on Tours that he/she did not list
+* View particular Tour's Reviews
+  * From home page follow "Tours Page" link
+  * Follow "Details" link beside the Tour (links are located to the right of each tour) that you are interested in
+  * Scroll down to "Reviews" section and click "View Reviews" button
+  * *Note:* Reviews are only available IFF tour is in the "Completed" status and only customers who booked at least 1 (one) seat on the Tour may leave review
 
   
 #### As Customer I want to ..
 * Edit my profile name
-  * From home page go to "Customer Page"
-  * Click Edit/Delete Profile
+  * From home follow "Customer Page" link
+  * Under "My Profile" and click "Edit/Delete Profile"
 * Write a review for a tour
-  * Two conditions must be met. Only if both conditions are met, Customer may leave a review, no other way is possible.
+  * Two conditions must be met. Only if both conditions are met, customer may leave a review, no other way is possible.
     
     a) Tour must have Status "Completed", meaning it has already taken place in the past (and it must not be Canceled by an Agent)
     
     b) Customer must have at least 1 booked seat for that tour
     
-  * Customer may create only 1 (one) review per a Tour
-  * If above two conditions are met, from home page go to "Tours Page" and click on "Details" of the Tour you want to write/view/edit review
-  * Scroll down to "Reviews" section and perform action you are interested in
+  * Customer may create only 1 (one) review per a Tour, but customer may edit or delete it
+  * If above two conditions are met, from home page follow "Tours Page"
+  * Follow "Details" link beside the Tour (links are located to the right of each tour) that you are interested in write/view/edit review
+  * Scroll down to "Reviews" section and perform action you are interested in ("Your Review", "Write Review", "Edit Review", "Delete")
 * View all Reviews of any Tour
+  * From home page follow "Reviews Page" link
   * Customer may view all Reviews of all or any Tour(s)
-  * From home page go to "Reviews Page"
 * View/Edit/Delete Review of a Tour
-  * Customer may Edit/Delete only his/her Review for a Tour (only iff Review already exists)
-  * From home page go to "Tours Page"
-  * Click on "Details" of the Tour that you want to view/edit/delete for
-  * Scroll down to "Reviews" section and perform action you are interested in
-  * Alternative: From home page go to "Reviews Page" in the list of Reviews if any reviews were created by you, you may Edit/Delete Review with provided links
+  * Customer may Edit/Delete only IFF
+  
+    a) Customer has already submitted (written) a review (or review exists)
+    
+    b) Review was submitted by the customer
+
+  * From home page follow "Tours Page" link
+  * Follow "Details" link beside the Tour (links are located to the right of each tour) that you are interested in write/view/edit review
+  * Scroll down to "Reviews" section and perform action you are interested in ("Your Review", "Edit Review", "Delete")
+  * Alternative: From home page follow "Reviews Page" link and in the list of Reviews if any reviews were created by you, you may Edit/Delete Review with provided links ot the right of each review
 * View all Tours
+  * From home page follow "Tours Page" link
   * Customer may view all Tours regardless of Tours' status
 * Book a Tour
-  * Customer may only book a Tour iff Tour's status is "In Future"
-  * Customer may not book the same Tour more than once
-  * From home page go to "Tours Page" and click on "Book Tour" link besides the Tour that you want to book
+  * From home page follow "Tours Page" link and follow "Book Tour" link beside the Tour (links are located to the right of each tour) that you want to book
   * Alternative: From home page go to "Tours Page" and click on "Details" of the Tour you want to book, scroll down and click Tour 
+  * Customer may only book a Tour IFF following conditions are met:
+  
+    a) Tour's status is "In Future"
+    
+    b) Customer had not booked the same Tour previously
+  
+  * If above conditions are not met, Customer may not be able to book a tour. In that case the "Book" option will be hidden from the customer
+
 * View/Edit/Delete my Bookings
-  * From home page go to "My Booking Page"
-  * Choose the link next to a Booking to perform action you are interested in - "Details", "Edit Booking", "Delete Booking"
-* Bookmark a Tour
+  * From home page navigate to "My Reservations Pages" and follow "My Bookings Page" link
+  * Choose the link next to a Booking to perform action you are interested in
+    * "Details", "Edit Booking", "Delete Booking" options are all available to customer
+* Bookmark Tours
+  * From home page follow "Tours Page" link and mark check-boxes of Tours you want to bookmark
+  * Click "Bookmark!" button
   * Customer may bookmark any Tours in the System regardless of their Status
-  * From home page go to "Tours Page" and mark check-boxes of Tours you want to bookmark
-  * Click "Bookmark!"
 * Undo Bookmark a Tour or View all my Bookmarked Tours
-  * From home page go to "My Bookmarks Page"
+  * From home page navigate to "My Reservations Pages" and follow "My Bookmarks Page" link
   * Mark check-boxes of Tours you want to undo bookmark
-  * Click "Undo bookmark"
+  * Click "Undo bookmark" button
 
 ### Application Development Environment
 * Ubuntu 18.04.2 LTS

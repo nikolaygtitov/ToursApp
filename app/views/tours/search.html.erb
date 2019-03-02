@@ -6,13 +6,13 @@
       <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
     <% end %>
     <%= form_tag(tours_path, method: :get) do %>
-      <h4>Search by start date  (year-month-day, like2019-02-22):</h4>
+      <h4>Search by start date (YYYY-MM-DD, example 2019-02-22):</h4>
       <%= text_field_tag 'search[date_from]', @search.date_from %>
       <%= text_field_tag 'search[date_to]', @search.date_to %>
       <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>
     <% end %>
     <%= form_tag(tours_path, method: :get) do %>
-      <h4>Search by price:(low price, high price)</h4>
+      <h4>Search by price:(min price, max price)</h4>
       <%= text_field_tag 'search[price_from]', @search.price_from %>
       <%= text_field_tag 'search[price_to]', @search.price_to %>
       <%= submit_tag ("Search"), name:nil, class: 'btn search-button' %>

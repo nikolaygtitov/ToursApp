@@ -22,8 +22,8 @@
   <br>
 <% end %>
 
-<h1>My Customers section</h1>
 <% if current_user.admin? || current_user.agent? %>
+  <h1>My Customers section</h1>
   <%= link_to 'Who Booked My Tours', bookings_url %> |
   <%= link_to 'Who Bookmarked My Tours', agent_bookmarks_url %>
   <br>

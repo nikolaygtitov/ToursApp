@@ -12,7 +12,7 @@
 
   <div class="field">
     <% if current_user.admin? %>
-      <%= f.label :email %> <i>(Admin cannot change credentials for safety reasons)</i><br />
+      <%= f.label :email %> <i>(Admin cannot change credentials for security reasons)</i><br />
       <%= f.email_field :email, autofocus: true, autocomplete: "email", readonly: true %>
     <% else %>
       <%= f.label :email %>
